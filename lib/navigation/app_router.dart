@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
-import 'package:flutter_application_1/ui/TestHook/testHook.dart';
 import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
-import 'package:flutter_application_1/ui/login/login_page.dart';
-import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
 
 class RouterApp {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -14,14 +11,16 @@ class RouterApp {
                   title: "test41",
                 ));
 
-      case RoutePaths.secondScreen:
+      case RoutePaths.home:
         // you can do things like pass arguments to screens
-        return MaterialPageRoute(builder: (_) => const MyHomePage(
-                  title: "second",
+        return MaterialPageRoute(
+            builder: (_) => const MyHomePage(
+                  title: "home",
                 ));
       case RoutePaths.test:
         // you can do things like pass arguments to screens
-        return MaterialPageRoute(builder: (_) => const MyHomePage(
+        return MaterialPageRoute(
+            builder: (_) => const MyHomePage(
                   title: "third",
                 ));
       default:

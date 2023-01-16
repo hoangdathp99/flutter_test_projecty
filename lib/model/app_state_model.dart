@@ -14,7 +14,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
-import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
 
 import 'product.dart';
 import 'product_repository.dart';
@@ -22,7 +21,7 @@ import 'product_repository.dart';
 class AppStateModel extends foundation.ChangeNotifier {
   // All the available products.
   List<Product> _availableProducts = [];
-  PageController _controller = PageController(initialPage: 1);
+  PageController _controller = PageController(initialPage: 0);
   // Loads the list of available products from the repo.
   void loadProducts() {
     _availableProducts = ProductsRepository.loadProducts(Category.all);

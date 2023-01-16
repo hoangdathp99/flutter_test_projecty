@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
 import 'package:flutter_application_1/ui/detailPage/detail_page.dart';
-import 'package:flutter_application_1/ui/home_page.dart/home_screen.dart';
-import 'package:flutter_application_1/ui/login/login_page.dart';
-import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
+import 'package:flutter_application_1/ui/second_page/second_page.dart';
 
 class SecondNavigator extends StatefulWidget {
   const SecondNavigator({super.key});
@@ -24,7 +21,9 @@ class _SecondNavigatorState extends State<SecondNavigator> {
                 case '/':
                   return const SecondScreen();
                 case 'detail':
-                  return const DetailPage(title: "detail",);
+                  return const DetailPage(
+                    title: "detail",
+                  );
                 default:
                   return const SecondScreen();
               }

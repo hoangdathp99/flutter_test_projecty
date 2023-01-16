@@ -20,10 +20,11 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
   // late PersistentTabController _controller;
-late PageController controller = Provider.of<AppStateModel>(context, listen: false).controller;
+
+  late PageController controller =
+      Provider.of<AppStateModel>(context, listen: false).controller;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -35,8 +36,9 @@ late PageController controller = Provider.of<AppStateModel>(context, listen: fal
   @override
   void initState() {
     super.initState();
-    // controller = 
-    _selectedIndex=controller.initialPage;
+    // controller =
+    print(widget.title);
+    _selectedIndex = controller.initialPage;
     // _controller = PersistentTabController();
   }
 

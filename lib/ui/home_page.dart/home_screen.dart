@@ -45,33 +45,29 @@ class _HomeScreenState extends State<HomeScreen> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return  Scaffold(
-            appBar: AppBar(
-              // Here we take the value from the MyHomePage object that was created by
-              // the App.build method, and use it to set our appbar title.
-              title: Text(widget.title),
-            ),
-            body: Center(child: Consumer<AppStateModel>(
-              builder: (context, value, child) {
-                // print(value.productName);
-                return  Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        value.controller.jumpToPage(1);
-                        // widget.setIndex!(1);
-                        // Navigator.pop(context);
-                        // pushPage(RoutePaths.secondScreen);
-                        // value.loadProducts();
-                      },
-                      child: const Text('Go second!'),
-                    ),
-                    value.productName != ""
-                        ? Text(value.productName)
-                        : Container()
-                  ],
-                );
-              },
-            )));
+    return Scaffold(
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
+        ),
+        body: Center(child: Consumer<AppStateModel>(
+          builder: (context, value, child) {
+            // print(value.productName);
+            return Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // value.controller.jumpToPage(1);
+                    Navigator.pushNamed(context, RoutePaths.detail);
+                    // value.loadProducts();
+                  },
+                  child: const Text('Go detail!'),
+                ),
+                value.productName != "" ? Text(value.productName) : Container()
+              ],
+            );
+          },
+        )));
   }
 }

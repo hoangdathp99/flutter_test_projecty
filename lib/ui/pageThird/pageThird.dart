@@ -6,6 +6,7 @@ import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
 import 'package:flutter_application_1/ui/login/login_page.dart';
 import 'package:provider/provider.dart';
+
 class PageThird extends StatefulWidget {
   const PageThird({super.key, required this.title});
 
@@ -46,7 +47,8 @@ class _PageThirdState extends State<PageThird> {
                   ElevatedButton(
                     onPressed: () {
                       // Navigator.pushNamed(context, '/', arguments: 2);
-                      pushPage(RoutePaths.test);
+                      // pushPage(RoutePaths.test);
+                      value.loadProducts();
                     },
                     child: const Text('load product'),
                   ),
