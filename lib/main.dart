@@ -4,14 +4,14 @@ import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/navigation/action.dart';
 import 'package:flutter_application_1/navigation/app_router.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
+import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
+import 'package:flutter_application_1/ui/home_page.dart/home_screen.dart';
 import 'package:provider/provider.dart';
-
 void main() {
   runApp(const MyApp());
 }
 
 // ignore: constant_identifier_names
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -29,8 +29,10 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
+          
+          home: const MyHomePage(title: "Home"),
           navigatorKey: navigatorKey,
-          initialRoute: RoutePaths.start,
+          // initialRoute: RoutePaths.start,
           onGenerateRoute: RouterApp.generateRoute,
         ));
   }

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/navigation/action.dart';
-import 'package:flutter_application_1/navigation/app_router.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
-import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
-import 'package:flutter_application_1/ui/login/login_page.dart';
 import 'package:provider/provider.dart';
-class PageThird extends StatefulWidget {
-  const PageThird({super.key, required this.title});
+class DetailPage extends StatefulWidget {
+  const DetailPage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -20,10 +17,10 @@ class PageThird extends StatefulWidget {
 
   final String title;
   @override
-  State<PageThird> createState() => _PageThirdState();
+  State<DetailPage> createState() => _DetailPageState();
 }
 
-class _PageThirdState extends State<PageThird> {
+class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done

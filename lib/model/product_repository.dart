@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:flutter/cupertino.dart';
+
 import 'product.dart';
 
 class ProductsRepository {
@@ -24,11 +26,17 @@ class ProductsRepository {
       price: 120,
     ),
   ];
+  static late PageController controller;
   static List<Product> loadProducts(Category category) {
     if (category == Category.all) {
       return _allProducts;
     } else {
       return _allProducts.where((p) => p.category == category).toList();
     }
+  }
+  static setController(controller) {
+
+      return controller;
+    
   }
 }

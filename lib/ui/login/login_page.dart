@@ -15,7 +15,7 @@ class SecondScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            goBack();
+            Navigator.pushNamed(context, "detail");
           },
           child: const Text('Go backkk!'),
         ),

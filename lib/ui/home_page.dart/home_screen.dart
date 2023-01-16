@@ -4,11 +4,13 @@ import 'package:flutter_application_1/navigation/action.dart';
 import 'package:flutter_application_1/navigation/app_router.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
+import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
 import 'package:flutter_application_1/ui/login/login_page.dart';
+import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.title});
+  const HomeScreen({super.key, required this.title, this.setIndex});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -20,7 +22,7 @@ class HomeScreen extends StatefulWidget {
   // always marked "final".
 
   final String title;
-
+  final PageController? setIndex;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -35,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(this.mounted);
+    print(context);
     // this.mounted;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -43,28 +45,33 @@ class _HomeScreenState extends State<HomeScreen> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-        ),
-        body: Center(child: Consumer<AppStateModel>(
-          builder: (context, value, child) {
-            // print(value.productName);
-            return Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    pushPage(RoutePaths.secondScreen);
-                    // value.loadProducts();
-                  },
-                  child: const Text('Go second!'),
-                ),
-                value.productName != "" ? Text(value.productName) : Container()
-              ],
-            );
-          },
-        )));
+    return  Scaffold(
+            appBar: AppBar(
+              // Here we take the value from the MyHomePage object that was created by
+              // the App.build method, and use it to set our appbar title.
+              title: Text(widget.title),
+            ),
+            body: Center(child: Consumer<AppStateModel>(
+              builder: (context, value, child) {
+                // print(value.productName);
+                return  Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        value.controller.jumpToPage(1);
+                        // widget.setIndex!(1);
+                        // Navigator.pop(context);
+                        // pushPage(RoutePaths.secondScreen);
+                        // value.loadProducts();
+                      },
+                      child: const Text('Go second!'),
+                    ),
+                    value.productName != ""
+                        ? Text(value.productName)
+                        : Container()
+                  ],
+                );
+              },
+            )));
   }
 }
