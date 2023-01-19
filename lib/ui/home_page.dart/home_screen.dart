@@ -7,7 +7,9 @@ import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
 import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
 import 'package:flutter_application_1/ui/login/login_page.dart';
 import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
+import 'package:flutter_application_1/widgets/productCard/product_card.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/model/product.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title, this.setIndex});
@@ -34,10 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     print("initState Called");
   }
-
   @override
   Widget build(BuildContext context) {
-    print(context);
     // this.mounted;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -51,21 +51,30 @@ class _HomeScreenState extends State<HomeScreen> {
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
         ),
-        body: Center(child: Consumer<AppStateModel>(
+        body: Container(child: Consumer<AppStateModel>(
           builder: (context, value, child) {
             // print(value.productName);
-            return Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // value.controller.jumpToPage(1);
-                    Navigator.pushNamed(context, RoutePaths.detail);
-                    // value.loadProducts();
-                  },
-                  child: const Text('Go detail!'),
-                ),
-                value.productName != "" ? Text(value.productName) : Container()
-              ],
+            return SingleChildScrollView(
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                      ...(value.availableProducts as List<Product>).map((product) {
+                        return Expanded(flex:40 ,child: ProductCard( product: product));
+                      }).toList(),
+                  // 
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     // value.controller.jumpToPage(1);
+                  //     Navigator.pushNamed(context, RoutePaths.detail);
+                  //     // value.loadProducts();
+                  //   },
+                  //   child: const Text('Go detail!'),
+                  // ),
+                  // value.productName != "" ? Text(value.availableProducts.toString()) : Container()
+                ],
+              ),
             );
           },
         )));

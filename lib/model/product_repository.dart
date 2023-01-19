@@ -21,9 +21,42 @@ class ProductsRepository {
     Product(
       category: Category.accessories,
       id: 0,
+      description: 'Prepare any meal you want.',
       isFeatured: true,
-      name: 'Vagabond sack',
-      price: 120,
+      name: 'Red Shirt',
+      price: 29.99,
+      imageUrl:
+          'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
+    ),
+    Product(
+      category: Category.accessories,
+      id: 1,
+      isFeatured: true,
+      name: 'Trousers',
+      description: 'Prepare any meal you want.',
+      price: 19.99,
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
+    ),
+    Product(
+      category: Category.accessories,
+      id: 2,
+      isFeatured: true,
+      name: 'Yellow Scarf',
+      description: 'Prepare any meal you want.',
+      price: 39.99,
+      imageUrl:
+          'https://cdn.alongwalker.co/info/wp-content/uploads/2022/11/11190447/image-400-hinh-anh-anime-nam-nu-sieu-cute-cuc-ngau-dep-nhat-574757ab56022035d4726e6d8942bed2.jpg',
+    ),
+    Product(
+      category: Category.accessories,
+      id: 3,
+      isFeatured: true,
+      description: 'Prepare any meal you want.',
+      name: 'A Pan',
+      price: 49.99,
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ];
   static late PageController controller;
@@ -34,9 +67,8 @@ class ProductsRepository {
       return _allProducts.where((p) => p.category == category).toList();
     }
   }
-  static setController(controller) {
 
-      return controller;
-    
+  static setController(controller) {
+    return controller;
   }
 }

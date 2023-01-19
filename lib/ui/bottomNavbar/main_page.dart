@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
+import 'package:flutter_application_1/model/product_repository.dart';
 // import 'package:flutter_application_1/navigation/action.dart';
 // import 'package:flutter_application_1/navigation/app_router.dart';
 import 'package:flutter_application_1/navigation/home_navigator.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
 // import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
 // import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/model/product.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -25,6 +28,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   late PageController controller =
       Provider.of<AppStateModel>(context, listen: false).controller;
+  late List<Product> allProduct =
+      Provider.of<AppStateModel>(context, listen: true).availableProducts;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -35,6 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AppStateModel>(context, listen: false).loadProducts();
+    });
     super.initState();
     // controller =
     print(widget.title);
@@ -93,11 +101,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: PageView(
-          controller: controller,
-          onPageChanged: _onItemTapped,
-          children: _pages(),
-        ),
+        child: Consumer<AppStateModel>(builder: (context, value, child) {
+          return PageView(
+            controller: controller,
+            onPageChanged: _onItemTapped,
+            children: _pages(),
+          );
+        }),
       ),
       persistentFooterButtons: [
         Row(
