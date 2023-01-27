@@ -9,21 +9,25 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: listProduct.length,
-      padding: const EdgeInsets.all(10),
-      itemBuilder: (context, index) => InkWell(
-          onTap: () {
-            // value.controller.jumpToPage(1);
-            Navigator.pushNamed(context, RoutePaths.detail);
-            // value.loadProducts();
-          },
-          child: ProductCard(product: listProduct[index])),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    return Container(
+      decoration: BoxDecoration(color: Color(0xFFf4f4f4)),
+      child: GridView.builder(
+        itemCount: listProduct.length,
+        padding: const EdgeInsets.all(10),
+        itemBuilder: (context, index) => InkWell(
+            onTap: () {
+              // value.controller.jumpToPage(1);
+              Navigator.pushNamed(context, RoutePaths.detail);
+              // value.loadProducts();
+            },
+            child: ProductCard(product: listProduct[index])),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 2 / 3,
           mainAxisSpacing: 20,
-          crossAxisSpacing: 20),
+          crossAxisSpacing: 20,
+        ),
+      ),
     );
   }
 }

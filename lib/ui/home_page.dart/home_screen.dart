@@ -53,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
         ),
-        body: Container(child: Consumer<AppStateModel>(
+        body: Consumer<AppStateModel>(
           builder: (context, value, child) {
             // print(value.productName);
             // return SingleChildScrollView(
             return ProductList(listProduct: value.availableProducts);
           },
-        )));
+        ));
   }
 }
