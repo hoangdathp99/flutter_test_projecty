@@ -8,6 +8,7 @@ import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
 import 'package:flutter_application_1/ui/login/login_page.dart';
 import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
 import 'package:flutter_application_1/widgets/productCard/product_card.dart';
+import 'package:flutter_application_1/widgets/productCard/product_list.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/model/product.dart';
 
@@ -36,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     print("initState Called");
   }
+
   @override
   Widget build(BuildContext context) {
     // this.mounted;
@@ -54,28 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Container(child: Consumer<AppStateModel>(
           builder: (context, value, child) {
             // print(value.productName);
-            return SingleChildScrollView(
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                      ...(value.availableProducts as List<Product>).map((product) {
-                        return Expanded(flex:40 ,child: ProductCard( product: product));
-                      }).toList(),
-                  // 
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     // value.controller.jumpToPage(1);
-                  //     Navigator.pushNamed(context, RoutePaths.detail);
-                  //     // value.loadProducts();
-                  //   },
-                  //   child: const Text('Go detail!'),
-                  // ),
-                  // value.productName != "" ? Text(value.availableProducts.toString()) : Container()
-                ],
-              ),
-            );
+            // return SingleChildScrollView(
+            return ProductList(listProduct: value.availableProducts);
           },
         )));
   }

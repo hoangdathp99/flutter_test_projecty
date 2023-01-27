@@ -58,6 +58,26 @@ class ProductsRepository {
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
+    Product(
+      category: Category.accessories,
+      id: 4,
+      isFeatured: true,
+      description: 'Prepare any meal you want.',
+      name: 'A Pan',
+      price: 49.99,
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
+    ),
+    Product(
+      category: Category.accessories,
+      id: 5,
+      isFeatured: true,
+      description: 'Prepare any meal you want.',
+      name: 'A Pan',
+      price: 49.99,
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
+    ),
   ];
   static late PageController controller;
   static List<Product> loadProducts(Category category) {
