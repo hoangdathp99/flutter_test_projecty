@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ui/detailPage/detail_page.dart';
-import 'package:flutter_application_1/ui/home_page.dart/detail_screen.dart';
 import 'package:flutter_application_1/ui/home_page.dart/home_screen.dart';
 
 class HomeNavigator extends StatefulWidget {
@@ -22,7 +21,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
                 case '/':
                   return const HomeScreen(title: 'home');
                 case 'detail':
-                  return const DetailScreen();
+                  return const DetailPage();
                 default:
                   return const HomeScreen(title: 'home');
               }

@@ -24,7 +24,7 @@ class _ThirdNavigatorState extends State<ThirdNavigator> {
             case '/':
               return const PageThird(title: 'Third');
             case 'second':
-              return const DetailPage(title: "Detail");
+              return const DetailPage();
             default:
               return const PageThird(title: 'Third');
           }

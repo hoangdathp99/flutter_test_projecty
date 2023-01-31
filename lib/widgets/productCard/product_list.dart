@@ -17,7 +17,9 @@ class ProductList extends StatelessWidget {
         itemBuilder: (context, index) => InkWell(
             onTap: () {
               // value.controller.jumpToPage(1);
-              Navigator.pushNamed(context, RoutePaths.detail);
+              Navigator.pushNamed(context, RoutePaths.detail,arguments: 
+                listProduct[index]
+              );
               // value.loadProducts();
             },
             child: ProductCard(product: listProduct[index])),
