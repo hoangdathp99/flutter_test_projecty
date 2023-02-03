@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
+import 'package:flutter_application_1/model/product_repository.dart';
 // import 'package:flutter_application_1/navigation/action.dart';
 // import 'package:flutter_application_1/navigation/app_router.dart';
 import 'package:flutter_application_1/navigation/home_navigator.dart';
@@ -12,93 +14,132 @@ import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
 // import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
 // import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/model/product.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // late PersistentTabController _controller;
+  late List<Product> allProduct =
+      Provider.of<AppStateModel>(context, listen: true).availableProducts;
 
-  late PageController controller =
-      Provider.of<AppStateModel>(context, listen: false).controller;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    controller.jumpToPage(index);
+    // controller.jumpToPage(index);
   }
 
   int _selectedIndex = 0;
+  // ignore: prefer_typing_uninitialized_variables
+  var position = 0.0;
+  bool end = true;
+  Offset offset = Offset.zero;
+  void _onHorizontalDragStart(DragStartDetails details) {
+    position = 0;
+    end = false;
+  }
+
+  void _onHorizontalDragUpdate(DragUpdateDetails details) {
+    if (details.primaryDelta != null) {
+      setState(() {
+        position = position - details.primaryDelta!.toDouble();
+      });
+      setState(() {
+        offset = Offset(details.primaryDelta!, 0);
+      });
+    }
+  }
+
+  void _onHorizontalDragEnd(DragEndDetails details) {
+    if (position < -50) {
+      position = 0;
+      if (_selectedIndex > 0) {
+        _onItemTapped(_selectedIndex - 1);
+      } else {
+        _onItemTapped(_selectedIndex);
+      }
+      setState(() {
+        end = true;
+      });
+      return;
+    } else if (position > 50) {
+      position = 0;
+      if (_selectedIndex < 2) {
+        _onItemTapped(_selectedIndex + 1);
+      } else {
+        _onItemTapped(_selectedIndex);
+      }
+      setState(() {
+        end = true;
+      });
+    }
+    else{
+      setState(() {
+        position=0;
+        end = true;
+      });
+    }
+  }
+
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AppStateModel>(context, listen: false).loadProducts();
+    });
     super.initState();
     // controller =
-    print(widget.title);
-    _selectedIndex = controller.initialPage;
+    if (kDebugMode) {
+      print(widget.title);
+    }
+    // _selectedIndex = controller.initialPage;
     // _controller = PersistentTabController();
   }
 
-  static List<Widget> _pages() => <Widget>[
-        const HomeNavigator(),
-        const SecondNavigator(),
-        const ThirdNavigator(),
-        // HomeScreen(title: "Home", setIndex: controller),
-        // SecondScreen(),
-        // PageThird(title: "Third")
+  static List<Widget> _pages(bool end) => <Widget>[
+        AnimatedOpacity(
+            opacity: end ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 1000),
+            child: const HomeNavigator()),
+        AnimatedOpacity(
+            opacity: end ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 1000),
+            child: const SecondNavigator()),
+        AnimatedOpacity(
+            opacity: end ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 1000),
+            child: const ThirdNavigator()),
       ];
   final List<BottomNavItem> _listBottomNavItems = const [
     BottomNavItem(title: "homeLabel", icon: Icons.home),
     BottomNavItem(title: "activityLabel", icon: Icons.receipt),
     BottomNavItem(title: "walletLabel", icon: Icons.credit_card),
   ];
-  // List<PersistentBottomNavBarItem> _navBarsItems() => [
-  //       PersistentBottomNavBarItem(
-  //           icon: const Icon(Icons.home),
-  //           title: "Home",
-  //           activeColorPrimary: Colors.blue,
-  //           inactiveColorPrimary: Colors.grey,
-  //           inactiveColorSecondary: Colors.purple,
-  //           routeAndNavigatorSettings: RouteAndNavigatorSettings(
-  //             navigatorKey: navigatorKey,
-  //             initialRoute: RoutePaths.start,
-  //             onGenerateRoute: RouterApp.generateRoute,
-  //           )),
-  //       PersistentBottomNavBarItem(
-  //           icon: const Icon(Icons.receipt),
-  //           title: "Home",
-  //           activeColorPrimary: Colors.blue,
-  //           inactiveColorPrimary: Colors.grey,
-  //           inactiveColorSecondary: Colors.purple,
-  //           routeAndNavigatorSettings: RouteAndNavigatorSettings(
-  //             navigatorKey: navigatorKey,
-  //             initialRoute: RoutePaths.start,
-  //             onGenerateRoute: RouterApp.generateRoute,
-  //           )),
-  //       PersistentBottomNavBarItem(
-  //           icon: const Icon(Icons.credit_card),
-  //           title: "Home",
-  //           activeColorPrimary: Colors.blue,
-  //           inactiveColorPrimary: Colors.grey,
-  //           inactiveColorSecondary: Colors.purple,
-  //           routeAndNavigatorSettings: RouteAndNavigatorSettings(
-  //             navigatorKey: navigatorKey,
-  //             initialRoute: RoutePaths.start,
-  //             onGenerateRoute: RouterApp.generateRoute,
-  //           )),
-  //     ];
+ 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: PageView(
-          controller: controller,
-          onPageChanged: _onItemTapped,
-          children: _pages(),
+      body: GestureDetector(
+        onHorizontalDragStart: _onHorizontalDragStart,
+        onHorizontalDragEnd: _onHorizontalDragEnd,
+        onHorizontalDragUpdate: _onHorizontalDragUpdate,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 0),
+          transform: Matrix4.translationValues(-position, 0, 0),
+          child: Consumer<AppStateModel>(builder: (context, value, child) {
+            return IndexedStack(
+              index: _selectedIndex,
+              children: _pages(end),
+            );
+          }),
         ),
       ),
+      
       persistentFooterButtons: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -116,27 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ],
-      // body: PersistentTabView(
-      //   context,
-      //   controller: _controller,
-      //   screens: _pages,
-      //   items: _navBarsItems(),
-      //   resizeToAvoidBottomInset: true,
-      //   navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
-      //       ? 0.0
-      //       : kBottomNavigationBarHeight,
-      //   bottomScreenMargin: 0,
-      //   backgroundColor: Colors.black,
-      //   decoration: const NavBarDecoration(colorBehindNavBar: Colors.indigo),
-      //   itemAnimationProperties: const ItemAnimationProperties(
-      //     duration: Duration(milliseconds: 400),
-      //     curve: Curves.ease,
-      //   ),
-      //   screenTransitionAnimation: const ScreenTransitionAnimation(
-      //     animateTabTransition: true,
-      //   ),
-      //   navBarStyle: NavBarStyle.style19,
-      // ),
     );
   }
 }

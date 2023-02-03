@@ -29,6 +29,7 @@ class AppStateModel extends foundation.ChangeNotifier {
   }
 
   PageController get controller => _controller;
+  List<Product> get availableProducts => _availableProducts;
   String get productName =>
       _availableProducts.isNotEmpty ? _availableProducts[0].toString() : "";
 }
