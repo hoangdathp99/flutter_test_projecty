@@ -38,11 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   // ignore: prefer_typing_uninitialized_variables
   var position = 0.0;
-  bool end = true;
   Offset offset = Offset.zero;
   void _onHorizontalDragStart(DragStartDetails details) {
     position = 0;
-    end = false;
   }
 
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
@@ -56,33 +54,25 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _onHorizontalDragEnd(DragEndDetails details) {
-    if (position < -50) {
+  void _onHorizontalDragEnd(DragEndDetails details, double size) {
+    if (position < -size / 2) {
       position = 0;
       if (_selectedIndex > 0) {
         _onItemTapped(_selectedIndex - 1);
       } else {
         _onItemTapped(_selectedIndex);
       }
-      setState(() {
-        end = true;
-      });
       return;
-    } else if (position > 50) {
+    } else if (position > size / 2) {
       position = 0;
       if (_selectedIndex < 2) {
         _onItemTapped(_selectedIndex + 1);
       } else {
         _onItemTapped(_selectedIndex);
       }
+    } else {
       setState(() {
-        end = true;
-      });
-    }
-    else{
-      setState(() {
-        position=0;
-        end = true;
+        position = 0;
       });
     }
   }
@@ -101,18 +91,24 @@ class _MyHomePageState extends State<MyHomePage> {
     // _controller = PersistentTabController();
   }
 
-  static List<Widget> _pages(bool end) => <Widget>[
+  static List<Widget> _pages(double position, double size) => <Widget>[
         AnimatedOpacity(
-            opacity: end ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 1000),
+            opacity: position.abs() <= size / 2
+                ? ((position).abs() / (size / 2) - 1).abs() % 2
+                : 0,
+            duration: const Duration(milliseconds: 300),
             child: const HomeNavigator()),
         AnimatedOpacity(
-            opacity: end ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 1000),
+            opacity: position.abs() <= (size / 2)
+                ? ((position).abs() / (size / 2) - 1).abs() % 2
+                : 0,
+            duration: const Duration(milliseconds: 300),
             child: const SecondNavigator()),
         AnimatedOpacity(
-            opacity: end ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 1000),
+            opacity: position.abs() <= (size / 2)
+                ? ((position).abs() / (size / 2) - 1).abs() % 2
+                : 0,
+            duration: const Duration(milliseconds: 300),
             child: const ThirdNavigator()),
       ];
   final List<BottomNavItem> _listBottomNavItems = const [
@@ -120,13 +116,14 @@ class _MyHomePageState extends State<MyHomePage> {
     BottomNavItem(title: "activityLabel", icon: Icons.receipt),
     BottomNavItem(title: "walletLabel", icon: Icons.credit_card),
   ];
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
         onHorizontalDragStart: _onHorizontalDragStart,
-        onHorizontalDragEnd: _onHorizontalDragEnd,
+        onHorizontalDragEnd: ((details) =>
+            _onHorizontalDragEnd(details, MediaQuery.of(context).size.width)),
         onHorizontalDragUpdate: _onHorizontalDragUpdate,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 0),
@@ -134,12 +131,11 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Consumer<AppStateModel>(builder: (context, value, child) {
             return IndexedStack(
               index: _selectedIndex,
-              children: _pages(end),
+              children: _pages(position, MediaQuery.of(context).size.width),
             );
           }),
         ),
       ),
-      
       persistentFooterButtons: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
