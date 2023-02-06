@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/product.dart';
 
 class ProductCard extends StatelessWidget {
-  final Product product;
+  final ProductType product;
   const ProductCard({super.key, required this.product});
 
   @override
@@ -36,13 +36,13 @@ class ProductCard extends StatelessWidget {
             // borderRadius: const BorderRadius.only(
             //     topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             image: DecorationImage(
-                image: NetworkImage(product.imageUrl), fit: BoxFit.contain),
+                image: NetworkImage(product.images[0] != null ? product.images[0] : "https://images.pexels.com/photos/127160/pexels-photo-127160.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"), fit: BoxFit.contain),
           ),
           height: 160,
         ),
         const SizedBox(height: 10),
         Column(children: [
-          Text(product.name,style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+          Text(product.title,style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
           Text('\$${product.price.toString()}'),
           const SizedBox(
             height: 20,

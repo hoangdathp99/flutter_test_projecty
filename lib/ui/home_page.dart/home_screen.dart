@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AppStateModel>(context, listen: false).loadProducts();
+      Provider.of<AppStateModel>(context, listen: false).getTinWinData(context);
     });
     print("initState Called");
   }
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // print(value.productName);
             // return SingleChildScrollView(
             return !value.loading
-                ? ProductList(listProduct: value.availableProducts)
+                ? ProductList(listProduct: value.Product)
                 : const Center(
                     child: CircularProgressIndicator(),
                   );

@@ -4,7 +4,7 @@ import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/widgets/productCard/product_card.dart';
 
 class ProductList extends StatelessWidget {
-  final List<Product> listProduct;
+  final List<ProductType> listProduct;
   const ProductList({super.key, required this.listProduct});
 
   @override

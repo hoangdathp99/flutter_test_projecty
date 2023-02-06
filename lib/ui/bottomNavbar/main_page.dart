@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
+import 'package:flutter_application_1/model/product.dart';
 import 'package:flutter_application_1/model/product_repository.dart';
 // import 'package:flutter_application_1/navigation/action.dart';
 // import 'package:flutter_application_1/navigation/app_router.dart';
@@ -14,8 +15,6 @@ import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
 // import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
 // import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/model/product.dart';
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
@@ -25,8 +24,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late List<Product> allProduct =
-      Provider.of<AppStateModel>(context, listen: true).availableProducts;
+  
 
   void _onItemTapped(int index) {
     setState(() {
@@ -53,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
-
+  
   void _onHorizontalDragEnd(DragEndDetails details, double size) {
     if (position < -size / 2) {
       position = 0;
@@ -156,3 +154,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/model/product.dart';
-import 'package:flutter_application_1/navigation/action.dart';
-import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:provider/provider.dart';
 
 class DetailPage extends StatefulWidget {
@@ -23,7 +21,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Product;
+    final args = ModalRoute.of(context)!.settings.arguments as ProductType;
     String capitalize(String str) {
       return str
           .split(' ')
@@ -41,7 +39,7 @@ class _DetailPageState extends State<DetailPage> {
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Text(args.name),
+          title: Text(args.title.toString()),
         ),
         body: SingleChildScrollView(
           child: Consumer<AppStateModel>(
@@ -52,7 +50,7 @@ class _DetailPageState extends State<DetailPage> {
                   Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage(args.imageUrl),
+                            image: NetworkImage(args.images[0]),
                             fit: BoxFit.cover)),
                     height: 300,
                     width: double.infinity,
@@ -63,8 +61,8 @@ class _DetailPageState extends State<DetailPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      args.name != ""
-                          ? Text(args.name,
+                      args.title != ""
+                          ? Text(args.title,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20))
                           : Container(),
@@ -84,9 +82,9 @@ class _DetailPageState extends State<DetailPage> {
                   Container(
                     alignment: Alignment.centerLeft,
                   // ignore: unrelated_type_equality_checks
-                    child: args.category != ""
+                    child: args.category.name != ""
                         ? Text(
-                            capitalize(args.category.name),
+                            capitalize(args.category.name.toString()),
                             style: const TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 16),
                             textAlign: TextAlign.left,

@@ -48,13 +48,9 @@ class _PageThirdState extends State<PageThird> {
                     onPressed: () {
                       // Navigator.pushNamed(context, '/', arguments: 2);
                       // pushPage(RoutePaths.test);
-                      value.loadProducts();
                     },
                     child: const Text('load product'),
                   ),
-                  value.productName != ""
-                      ? Text(value.productName)
-                      : Container()
                 ]);
           },
         )));
