@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
-import 'package:flutter_application_1/navigation/action.dart';
-import 'package:flutter_application_1/navigation/app_router.dart';
-import 'package:flutter_application_1/navigation/routePaths.dart';
-import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
-import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
-import 'package:flutter_application_1/ui/login/login_page.dart';
-import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
-import 'package:flutter_application_1/widgets/productCard/product_card.dart';
 import 'package:flutter_application_1/widgets/productCard/product_list.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/model/product.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title, this.setIndex});
@@ -35,6 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AppStateModel>(context, listen: false).loadProducts();
+    });
     print("initState Called");
   }
 
@@ -57,7 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, value, child) {
             // print(value.productName);
             // return SingleChildScrollView(
-            return ProductList(listProduct: value.availableProducts);
+            return !value.loading
+                ? ProductList(listProduct: value.availableProducts)
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  );
           },
         ));
   }

@@ -79,9 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AppStateModel>(context, listen: false).loadProducts();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Provider.of<AppStateModel>(context, listen: false).loadProducts();
+    // });
     super.initState();
     // controller =
     if (kDebugMode) {
