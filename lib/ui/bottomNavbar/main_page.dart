@@ -119,6 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
+        onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+        },
         onHorizontalDragStart: _onHorizontalDragStart,
         onHorizontalDragEnd: ((details) =>
             _onHorizontalDragEnd(details, MediaQuery.of(context).size.width)),

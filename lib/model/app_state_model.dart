@@ -19,18 +19,31 @@ import 'package:flutter_application_1/services/http_service.dart';
 
 class AppStateModel extends foundation.ChangeNotifier {
   // All the available products.
+  // ignore: non_constant_identifier_names
   List<ProductType> _ProductType = [ProductType(id: 0,category: Category(id: 0,image: "",name: ""),description: "",images: [],price: 0,title: "")];
+  // ignore: non_constant_identifier_names
+  List<ProductType> _ProductSearch = [ProductType(id: 0,category: Category(id: 0,image: "",name: ""),description: "",images: [],price: 0,title: "")];
   bool loading = true;
+  bool? loadingSearch = null;
   // Loads the list of available products from the repo.
   
   void getTinWinData(context) async {
     loading = true;
-    Iterable item = await fetchData("https://api.escuelajs.co/api/v1/products");
+    Iterable item = await fetchData("https://api.escuelajs.co/api/v1/products","");
     _ProductType = item.map((e) => ProductType.fromJson(e)).toList();
     loading = false; 
     notifyListeners();
   }
-
+  void getSearchData(context,param) async {
+    loadingSearch = true;
+    notifyListeners();
+    Iterable item = await fetchData("https://api.escuelajs.co/api/v1/products/",param);
+    _ProductSearch = item.map((e) => ProductType.fromJson(e)).toList();
+    loadingSearch = false; 
+    notifyListeners();
+  } 
+  // ignore: non_constant_identifier_names
   List<ProductType> get Product  => _ProductType;
-  
+  // ignore: non_constant_identifier_names
+  List<ProductType> get ProductSearch  => _ProductSearch;
 }

@@ -6,4 +6,5 @@ class RoutePaths {
   static const secondScreen = 'second';
   static const test = 'third';
   static const detail = 'detail';
+  static const search = 'search';
 }

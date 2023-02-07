@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
+import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/widgets/productCard/product_list.dart';
+import 'package:flutter_application_1/widgets/searchWidget/searchInput.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int num = 0;
+  String searchResult = "";
   @override
   initState() {
     super.initState();
@@ -31,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     print("initState Called");
   }
-
+  
   @override
   Widget build(BuildContext context) {
     // this.mounted;
@@ -42,21 +45,34 @@ class _HomeScreenState extends State<HomeScreen> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-        ),
-        body: Consumer<AppStateModel>(
-          builder: (context, value, child) {
-            // print(value.productName);
-            // return SingleChildScrollView(
-            return !value.loading
-                ? ProductList(listProduct: value.Product)
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  );
-          },
-        ));
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(widget.title),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                RoutePaths.search,
+                arguments: searchResult
+              );
+            },
+            child: SearchInput(),
+          ),
+        ]),
+      ),
+      body: Consumer<AppStateModel>(
+        builder: (context, value, child) {
+          // return SingleChildScrollView(
+          return !value.loading
+              ? ProductList(listProduct:value.Product)
+              : const Center(
+                  child: CircularProgressIndicator(),
+                );
+        },
+      ),
+    );
   }
 }
