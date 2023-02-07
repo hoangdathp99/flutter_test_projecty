@@ -33,7 +33,7 @@ class _SecondScreenState extends State<SecondScreen> {
             return !value.loading
                 // ? ProductList(listProduct: value.availableProducts)
                 ? Center(
-                    child: Text(value.postModel.title),
+                    child: Text(value.Product[0].title != null ? value.Product[0].title.toString() : ""),
                   )
                 : const Center(
                     child: CircularProgressIndicator(),

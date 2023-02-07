@@ -1,46 +1,29 @@
-// Copyright 2018-present the Flutter authors. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+import 'package:flutter_application_1/model/category.dart';
 
-enum Category {
-  all,
-  accessories,
-  clothing,
-  food,
-}
+class ProductType {
+  final int id;
+  final String title;
+  final int price;
+  final String description;
+  final Category category;
+  final List<String> images;
 
-class Product {
-  const Product({
-    required this.category,
+  ProductType({
     required this.id,
-    required this.isFeatured,
-    required this.name,
+    required this.title,
     required this.price,
     required this.description,
-    required this.imageUrl,
+    required this.category,
+    required this.images,
   });
-
-  final Category category;
-  final int id;
-  final bool isFeatured;
-  final String name;
-  final double price;
-  final String description;
-  final String imageUrl;
-
-  String get assetName => '$id-0.jpg';
-  String get assetPackage => 'shrine_images';
-
-  @override
-  String toString() => '$name $id';
+  factory ProductType.fromJson(Map<String, dynamic> json) {
+    return ProductType(
+      id: json['id'],
+      title: json['title'],
+      price: json['price'],
+      description: json['description'],
+      category: Category.fromJson(json['category']),
+      images: List<String>.from(json['images']),
+    );
+  }
 }
