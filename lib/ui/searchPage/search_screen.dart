@@ -15,17 +15,24 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   String searchText = "";
   FocusNode searchNode = FocusNode(); 
-
+  var provider ;
   void handleSearchText(value) {
     setState(() {
       searchText = value;
     });
   }
+  @override 
+  void initState(){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      provider = Provider.of<AppStateModel>(context, listen: false);
+    });
+  }
   @override
   void dispose() {
+    provider.resetSearchData();
     // Clean up the focus node when the Form is disposed.
     searchNode.dispose();
-
+    
     super.dispose();
   }
   @override

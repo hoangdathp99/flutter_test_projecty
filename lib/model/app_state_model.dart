@@ -17,7 +17,7 @@ import 'package:flutter_application_1/model/category.dart';
 import 'package:flutter_application_1/model/product.dart';
 import 'package:flutter_application_1/services/http_service.dart';
 
-class AppStateModel extends foundation.ChangeNotifier {
+class AppStateModel with foundation.ChangeNotifier {
   // All the available products.
   // ignore: non_constant_identifier_names
   List<ProductType> _ProductType = [ProductType(id: 0,category: Category(id: 0,image: "",name: ""),description: "",images: [],price: 0,title: "")];
@@ -26,7 +26,11 @@ class AppStateModel extends foundation.ChangeNotifier {
   bool loading = true;
   bool? loadingSearch = null;
   // Loads the list of available products from the repo.
-  
+  @override
+  void dispose() {
+    _ProductSearch = [ProductType(id: 0,category: Category(id: 0,image: "",name: ""),description: "",images: [],price: 0,title: "")];
+    super.dispose();
+  }
   void getTinWinData(context) async {
     loading = true;
     Iterable item = await fetchData("https://api.escuelajs.co/api/v1/products","");
@@ -42,6 +46,10 @@ class AppStateModel extends foundation.ChangeNotifier {
     loadingSearch = false; 
     notifyListeners();
   } 
+  void resetSearchData() {
+    _ProductSearch = [ProductType(id: 0,category: Category(id: 0,image: "",name: ""),description: "",images: [],price: 0,title: "")];
+    loadingSearch = null;
+  }
   // ignore: non_constant_identifier_names
   List<ProductType> get Product  => _ProductType;
   // ignore: non_constant_identifier_names
