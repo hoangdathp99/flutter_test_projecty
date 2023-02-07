@@ -1,12 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/navigation/action.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
+import 'package:flutter_application_1/services/http_service.dart';
 
 ////// TODO make login screen
-class LoginScreen extends StatelessWidget {
+///
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String email = '';
+  String password = '';
+  LoginRes _loginRes = LoginRes(accessToken: '', refreshToken: '');
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +33,12 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please fill email';
+                  }
+                  return null;
+                },
                 autofocus: true,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
@@ -27,28 +46,71 @@ class LoginScreen extends StatelessWidget {
                   hintText: 'Your email',
                   labelText: 'Email',
                 ),
-                onChanged: (value) => print(value),
+                onChanged: (value) => {email = value},
               ),
               const SizedBox(
                 height: 24,
               ),
               TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please fill password';
+                  }
+                  return null;
+                },
                 decoration:
                     const InputDecoration(filled: true, labelText: 'Password'),
                 obscureText: true,
-                onChanged: (value) => print(value),
+                onChanged: (value) => {password = value},
               ),
               const SizedBox(
                 height: 24,
               ),
-              TextButton(
+              ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, RoutePaths.home);
+                  Login(email, password, context);
                 },
                 child: const Text('Sign in'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutePaths.signUp);
+                },
+                child: const Text('Sign up'),
               )
             ],
           ),
         ))));
+  }
+
+  void Login(String email, String password, context) async {
+    LoginType loginReq = LoginType(
+      email: email,
+      password: password,
+    );
+    var res = await post('https://api.escuelajs.co/api/v1/auth/login',
+        jsonEncode(loginReq.toJson()));
+    _loginRes = LoginRes.fromJson(res);
+    print(_loginRes.accessToken);
+    if (_loginRes.accessToken != '') {
+      Navigator.pushReplacementNamed(context, RoutePaths.home);
+    }
+  }
+}
+
+class LoginType {
+  final String email;
+  final String password;
+  LoginType({this.email = '', this.password = ''});
+  Map<String, dynamic> toJson() => {'email': email, 'password': password};
+}
+
+class LoginRes {
+  final String accessToken;
+  final String refreshToken;
+  LoginRes({required this.accessToken, required this.refreshToken});
+  factory LoginRes.fromJson(Map<String, dynamic> json) {
+    return LoginRes(
+        accessToken: json['access_token'], refreshToken: json['refresh_token']);
   }
 }
