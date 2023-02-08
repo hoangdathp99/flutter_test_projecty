@@ -77,9 +77,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     onSelected: (ProductType selection) {
                       handleSearchText(selection.title);
                       _controller.text = selection.title;
+                      Params param = Params(title: searchText);
                       searchNode.unfocus();
                       Provider.of<AppStateModel>(context, listen: false)
-                          .getSearchData(context, '?title=${selection.title}');
+                          .getSearchData(context, param.toJson());
                     },
                     fieldViewBuilder: (BuildContext context,
                         TextEditingController textEditingController,
@@ -114,9 +115,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             fillColor: Colors.white,
                           ),
                           onSubmitted: (searchText) {
+                            Params param = Params(title: searchText);
                             searchNode.unfocus();
                             Provider.of<AppStateModel>(context, listen: false)
-                                .getSearchData(context, '?title=$searchText');
+                                .getSearchData(context, param.toJson());
                           });
                     },
                     optionsViewBuilder: (BuildContext context,
@@ -158,9 +160,10 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               ElevatedButton(
                   onPressed: (() {
+                    Params param = Params(title: searchText);
                     searchNode.unfocus();
                     Provider.of<AppStateModel>(context, listen: false)
-                        .getSearchData(context, '?title=$searchText');
+                        .getSearchData(context, param.toJson());
                   }),
                   child: const Text("Search")),
               Expanded(
@@ -177,4 +180,11 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
+}
+
+class Params {
+  final String title;
+
+  Params({this.title = ''});
+  Map<String, String> toJson() => {'title': title};
 }

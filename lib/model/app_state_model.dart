@@ -40,7 +40,9 @@ class AppStateModel with foundation.ChangeNotifier {
         title: "")
   ];
   bool loading = true;
+  // ignore: avoid_init_to_null
   bool? loadingSearch = null;
+  // ignore: avoid_init_to_null
   bool? loggedIn = null;
   // Loads the list of available products from the repo.
   @override
@@ -69,8 +71,8 @@ class AppStateModel with foundation.ChangeNotifier {
 
   void getTinWinData(context) async {
     loading = true;
-    Iterable item =
-        await fetchData("https://api.escuelajs.co/api/v1/products", "");
+    Iterable item = 
+        await fetchData("api.escuelajs.co","/api/v1/products",{"":""});
     _ProductType = item.map((e) => ProductType.fromJson(e)).toList();
     loading = false;
     notifyListeners();
@@ -80,7 +82,7 @@ class AppStateModel with foundation.ChangeNotifier {
     loadingSearch = true;
     notifyListeners();
     Iterable item =
-        await fetchData("https://api.escuelajs.co/api/v1/products/", param);
+        await fetchData("api.escuelajs.co","/api/v1/products/", param);
     _ProductSearch = item.map((e) => ProductType.fromJson(e)).toList();
     loadingSearch = false;
     notifyListeners();
