@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/services/http_service.dart';
-
-////// TODO make login screen
-///
+import 'package:flutter_application_1/utils/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,8 +16,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String email = '';
   String password = '';
+  String token = '';
   LoginRes _loginRes = LoginRes(accessToken: '', refreshToken: '');
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _loginRes = LoginRes.fromJson(res);
     print(_loginRes.accessToken);
     if (_loginRes.accessToken != '') {
+      await saveData(_loginRes.accessToken);
       Navigator.pushReplacementNamed(context, RoutePaths.home);
     }
   }

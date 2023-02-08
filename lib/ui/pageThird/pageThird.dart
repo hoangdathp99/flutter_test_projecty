@@ -5,11 +5,11 @@ import 'package:flutter_application_1/navigation/app_router.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
 import 'package:flutter_application_1/ui/login/login_page.dart';
+import 'package:flutter_application_1/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class PageThird extends StatefulWidget {
   const PageThird({super.key, required this.title});
-
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -25,6 +25,7 @@ class PageThird extends StatefulWidget {
 }
 
 class _PageThirdState extends State<PageThird> {
+  bool removeSuccess = false;
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -45,11 +46,19 @@ class _PageThirdState extends State<PageThird> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      // Navigator.pushNamed(context, '/', arguments: 2);
-                      // pushPage(RoutePaths.test);
+                    onPressed: () async {
+                      removeSuccess = await removeData();
+                      if (removeSuccess == true) {
+                        // removeSuccess = false;
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const LoginScreen()),
+                            (route) => false);
+                      }
                     },
-                    child: const Text('load product'),
+                    child: const Text('Logout'),
                   ),
                 ]);
           },

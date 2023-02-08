@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/services/http_service.dart';
+import 'package:flutter_application_1/ui/login/login_page.dart';
 
 ////// TODO make login screen
 class SignUpScreen extends StatefulWidget {
@@ -133,7 +134,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'https://api.escuelajs.co/api/v1/users/', jsonEncode(body.toJson()));
     print(res);
     if (res != '') {
-      Navigator.pushReplacementNamed(context, RoutePaths.login);
+      // Navigator.popUntil(context, ModalRoute.withName(RoutePaths.login));
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+          (route) => false);
     }
   }
 }

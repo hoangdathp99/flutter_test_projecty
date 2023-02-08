@@ -32,7 +32,7 @@ Future<dynamic> post(String url, body) async {
       throw Exception(response.statusCode);
     }
   } catch (e) {
-    print(e);
+    throw Exception(e);
   }
 }
 

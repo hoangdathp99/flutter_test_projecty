@@ -7,9 +7,13 @@ import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
 import 'package:flutter_application_1/ui/home_page.dart/home_screen.dart';
 import 'package:flutter_application_1/ui/login/login_page.dart';
+import 'package:flutter_application_1/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+String token = '';
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  token = await loadData();
   runApp(const MyApp());
 }
 
@@ -33,7 +37,7 @@ class MyApp extends StatelessWidget {
           ),
           home: const LoginScreen(),
           navigatorKey: navigatorKey,
-          initialRoute: RoutePaths.start,
+          initialRoute: token != '' ? RoutePaths.home : RoutePaths.start,
           onGenerateRoute: RouterApp.generateRoute,
         ));
   }
