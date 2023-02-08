@@ -6,15 +6,18 @@ import 'package:flutter_application_1/model/product_repository.dart';
 // import 'package:flutter_application_1/navigation/action.dart';
 // import 'package:flutter_application_1/navigation/app_router.dart';
 import 'package:flutter_application_1/navigation/home_navigator.dart';
+import 'package:flutter_application_1/navigation/routePaths.dart';
 // import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/navigation/second_screen_navigator.dart';
 import 'package:flutter_application_1/navigation/third_navigator.dart';
 import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
+import 'package:flutter_application_1/ui/login/login_page.dart';
 // import 'package:flutter_application_1/ui/home_page.dart/home_screen.dart';
 // import 'package:flutter_application_1/ui/login/login_page.dart';
 // import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
 // import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
@@ -24,8 +27,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -36,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   // ignore: prefer_typing_uninitialized_variables
   var position = 0.0;
+  var provider;
   Offset offset = Offset.zero;
   void _onHorizontalDragStart(DragStartDetails details) {
     position = 0;
@@ -51,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
-  
+
   void _onHorizontalDragEnd(DragEndDetails details, double size) {
     if (position < -size / 2) {
       position = 0;
@@ -117,10 +119,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool? shouldProceed =
+        Provider.of<AppStateModel>(context, listen: true).loggedIn;
+    if (shouldProceed == false) {
+      print(shouldProceed);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed(RoutePaths.login);
+      });
+    }
     return Scaffold(
       body: GestureDetector(
         onTap: () {
-            FocusManager.instance.primaryFocus?.unfocus();
+          FocusManager.instance.primaryFocus?.unfocus();
         },
         onHorizontalDragStart: _onHorizontalDragStart,
         onHorizontalDragEnd: ((details) =>
@@ -157,5 +167,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-
