@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<dynamic> fetchData(String url,param) async {
+Future<dynamic> fetchData(String url, param) async {
   try {
     final response = await http.get(Uri.parse(url + param));
     if (response.statusCode == 200) {

@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/services/http_service.dart';
+import 'package:flutter_application_1/ui/login/signup_page.dart';
 import 'package:flutter_application_1/utils/utils.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,8 +20,17 @@ class _LoginScreenState extends State<LoginScreen> {
   String email = '';
   String password = '';
   String token = '';
+  var provider;
   LoginRes _loginRes = LoginRes(accessToken: '', refreshToken: '');
   final _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      provider = Provider.of<AppStateModel>(context, listen: false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, RoutePaths.signUp);
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const SignUpScreen()));
                 },
                 child: const Text('Sign up'),
               )
@@ -94,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
     print(_loginRes.accessToken);
     if (_loginRes.accessToken != '') {
       await saveData(_loginRes.accessToken);
+      provider.logIn();
       Navigator.pushReplacementNamed(context, RoutePaths.home);
     }
   }

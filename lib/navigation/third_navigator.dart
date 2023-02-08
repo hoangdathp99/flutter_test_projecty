@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/ui/bottomNavbar/main_page.dart';
 import 'package:flutter_application_1/ui/detailPage/detail_page.dart';
 import 'package:flutter_application_1/ui/home_page.dart/home_screen.dart';
@@ -22,11 +23,11 @@ class _ThirdNavigatorState extends State<ThirdNavigator> {
             builder: (BuildContext context) {
           switch (settings.name) {
             case '/':
-              return const PageThird(title: 'Third');
-            case 'second':
-              return const DetailPage();
+              return const PageThird();
+            case 'main':
+              return const MyApp();
             default:
-              return const PageThird(title: 'Third');
+              return const PageThird();
           }
         });
       },
