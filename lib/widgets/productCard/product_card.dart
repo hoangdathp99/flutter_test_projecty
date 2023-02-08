@@ -7,15 +7,21 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String capitalize(String str) {
+      return str
+          .split(' ')
+          .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
+          .join(' ');
+    }
+
     return Container(
       decoration: BoxDecoration(
-          // border: Border.all(color: Color(0xFFBEBEBE)),
           borderRadius: BorderRadius.circular(10),
-          color:  const Color(0xFFf4f4f4),
+          color: const Color(0xFFf4f4f4),
           // ignore: prefer_const_literals_to_create_immutables
           boxShadow: [
             const BoxShadow(
-              color:  Color(0xFFcfcfcf),
+              color: Color(0xFFcfcfcf),
               offset: Offset(10, 10),
               blurRadius: 20,
               spreadRadius: 6,
@@ -26,23 +32,33 @@ class ProductCard extends StatelessWidget {
               blurRadius: 20,
               spreadRadius: 6,
             ),
-          ]
-          ),
-      padding: const EdgeInsets.only(top: 10,left: 10,right: 10,bottom: 0),
+          ]),
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Container(
           decoration: BoxDecoration(
-            // borderRadius: const BorderRadius.only(
-            //     topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             image: DecorationImage(
-                image: NetworkImage(product.images[0] != null ? product.images[0] : "https://images.pexels.com/photos/127160/pexels-photo-127160.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"), fit: BoxFit.contain),
+                image: NetworkImage(product.images[0]), fit: BoxFit.contain),
           ),
           height: 160,
         ),
         const SizedBox(height: 10),
         Column(children: [
-          Text(product.title,style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+          SizedBox(
+            height: 45,
+            child: Text(
+              capitalize(product.title),
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  ),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
           Text('\$${product.price.toString()}'),
           const SizedBox(
             height: 20,
