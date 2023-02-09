@@ -13,7 +13,7 @@ class ProductList extends StatelessWidget {
       decoration: BoxDecoration(color: Color(0xFFf4f4f4)),
       child: GridView.builder(
         itemCount: listProduct.length,
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.only(top:20,bottom: 10,left: 10,right: 10),
         itemBuilder: (context, index) => InkWell(
             onTap: () {
               // value.controller.jumpToPage(1);

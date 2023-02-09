@@ -19,17 +19,22 @@ class BottomNavItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(3),
-        width: 50,
+        width: 70,
         height: 40,
         decoration: BoxDecoration(
           color: isSelected == true ? Colors.black87 : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(children: [
-          Icon(icon,
+          Flexible(
+            flex: 1,
+            child: Icon(
+              icon,
               color: isSelected == true ? Colors.white : Colors.black87,
-              size: 17),
-          const SizedBox(height: 5),
+              size: 17,
+            ),
+          ),
+          // const SizedBox(height: 5),
           isSelected
               ? Text(
                   title,

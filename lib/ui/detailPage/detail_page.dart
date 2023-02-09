@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/model/product.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_application_1/utils/utils.dart';
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
   // This widget is the home page of your application. It is stateful, meaning
@@ -22,12 +22,6 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ProductType;
-    String capitalize(String str) {
-      return str
-          .split(' ')
-          .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
-          .join(' ');
-    }
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
