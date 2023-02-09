@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/widgets/productCard/product_list.dart';
 import 'package:flutter_application_1/widgets/searchWidget/searchInput.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/utils/utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title, this.setIndex});
@@ -34,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     print("initState Called");
   }
-  
+
   @override
   Widget build(BuildContext context) {
     // this.mounted;
@@ -48,16 +51,20 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
+        toolbarHeight: 90,
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        elevation: 0,
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text(widget.title),
+          Text(
+            capitalize(widget.title),
+            style: const TextStyle(color: Colors.black, fontFamily: 'Poppins',fontWeight: FontWeight.w700,fontSize: 25),
+          ),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                RoutePaths.search,
-                arguments: searchResult
-              );
+              Navigator.pushNamed(context, RoutePaths.search,
+                  arguments: searchResult);
             },
             child: SearchInput(),
           ),
@@ -67,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, value, child) {
           // return SingleChildScrollView(
           return !value.loading
-              ? ProductList(listProduct:value.Product)
+              ? ProductList(listProduct: value.Product)
               : const Center(
                   child: CircularProgressIndicator(),
                 );

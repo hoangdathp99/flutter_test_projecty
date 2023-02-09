@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/product.dart';
-
+import 'package:flutter_application_1/utils/utils.dart';
 class ProductCard extends StatelessWidget {
   final ProductType product;
   const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
-    String capitalize(String str) {
-      return str
-          .split(' ')
-          .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
-          .join(' ');
-    }
-
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -43,7 +36,7 @@ class ProductCard extends StatelessWidget {
           ),
           height: 160,
         ),
-        const SizedBox(height: 10),
+        // const SizedBox(height: 10),
         Column(children: [
           SizedBox(
             height: 45,
@@ -51,7 +44,7 @@ class ProductCard extends StatelessWidget {
               capitalize(product.title),
               style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 14,
                   ),
               textAlign: TextAlign.center,
               maxLines: 2,
@@ -59,9 +52,9 @@ class ProductCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          Text('\$${product.price.toString()}'),
+          Text('\$${product.price.toString()}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.w500),),
           const SizedBox(
-            height: 20,
+            height: 15,
           )
         ])
       ]),
