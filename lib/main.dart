@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: Colors.blue,
-            appBarTheme:const AppBarTheme(color: Color(0xfff4f4f4)),
+            appBarTheme:const AppBarTheme(color: Colors.transparent, elevation: 0.0, foregroundColor: Colors.black),
             fontFamily: 'Poppins'
           ),
           home: const LoginScreen(),
