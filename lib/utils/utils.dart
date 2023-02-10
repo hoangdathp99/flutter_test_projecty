@@ -1,18 +1,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> saveData(String token) async {
+Future<bool> saveData(String key, String token) async {
   final prefs = await SharedPreferences.getInstance();
-  prefs.setString("token", token);
+  return prefs.setString(key, token);
 }
 
-Future<String> loadData() async {
+Future<String> loadData(String key) async {
   final prefs = await SharedPreferences.getInstance();
-  return prefs.getString("token") ?? "";
+  return prefs.getString(key) ?? "";
 }
 
-Future<bool> removeData() async {
+Future<bool> removeData(String key) async {
   final prefs = await SharedPreferences.getInstance();
-  final success = await prefs.remove('token');
+  final success = await prefs.remove(key);
   // print(success);
   return success;
 }

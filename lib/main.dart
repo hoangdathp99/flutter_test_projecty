@@ -11,9 +11,11 @@ import 'package:flutter_application_1/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 String token = '';
+String refreshToken = '';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  token = await loadData();
+  token = await loadData("token");
+  // refreshToken = await loadData("refreshToken");
   runApp(const MyApp());
 }
 
@@ -33,10 +35,12 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
-            appBarTheme:const AppBarTheme(color: Colors.transparent, elevation: 0.0, foregroundColor: Colors.black),
-            fontFamily: 'Poppins'
-          ),
+              primarySwatch: Colors.blue,
+              appBarTheme: const AppBarTheme(
+                  color: Colors.transparent,
+                  elevation: 0.0,
+                  foregroundColor: Colors.black),
+              fontFamily: 'Poppins'),
           home: const LoginScreen(),
           navigatorKey: navigatorKey,
           initialRoute: token != '' ? RoutePaths.home : RoutePaths.start,

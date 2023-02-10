@@ -12,6 +12,7 @@ import 'package:flutter_application_1/navigation/second_screen_navigator.dart';
 import 'package:flutter_application_1/navigation/third_navigator.dart';
 import 'package:flutter_application_1/ui/bottomNavbar/bottom_nav_bar.dart';
 import 'package:flutter_application_1/ui/login/login_page.dart';
+import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
 // import 'package:flutter_application_1/ui/home_page.dart/home_screen.dart';
 // import 'package:flutter_application_1/ui/login/login_page.dart';
 // import 'package:flutter_application_1/ui/pageThird/pageThird.dart';
@@ -84,9 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // });
     super.initState();
     // controller =
-    if (kDebugMode) {
-      print(widget.title);
-    }
+    if (kDebugMode) {}
     // _selectedIndex = controller.initialPage;
     // _controller = PersistentTabController();
   }
@@ -119,13 +118,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool? shouldProceed =
-        Provider.of<AppStateModel>(context, listen: true).loggedIn;
-    if (shouldProceed == false) {
-      print(shouldProceed);
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).pushReplacementNamed(RoutePaths.login);
-      });
+    bool? logged = Provider.of<AppStateModel>(context, listen: true).loggedIn;
+    if (logged == false) {
+      // WidgetsBinding.instance.addPostFrameCallback((_) {
+      //   Navigator.of(context).pushReplacementNamed(RoutePaths.login);
+      // });
     }
     return Scaffold(
       body: GestureDetector(

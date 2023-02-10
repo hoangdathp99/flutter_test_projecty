@@ -132,7 +132,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     // print(body.toJson());
     var res = await post(
         'https://api.escuelajs.co/api/v1/users/', jsonEncode(body.toJson()));
-    print(res);
     if (res != '') {
       // Navigator.popUntil(context, ModalRoute.withName(RoutePaths.login));
       Navigator.pushAndRemoveUntil(

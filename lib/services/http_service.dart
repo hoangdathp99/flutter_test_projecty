@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<dynamic> fetchData(String url, String unencodedPath, Map<String, String> param) async {
+Future<dynamic> fetchData(
+    String url, String unencodedPath, Map<String, String> param) async {
   try {
-    final response = await http.get(Uri.https(url,unencodedPath, param));
+    final response = await http.get(Uri.https(url, unencodedPath, param));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -16,7 +17,6 @@ Future<dynamic> fetchData(String url, String unencodedPath, Map<String, String> 
 
 Future<dynamic> post(String url, body) async {
   try {
-    print(body);
     final response = await http.post(
       Uri.parse(url),
       body: body,
@@ -25,11 +25,10 @@ Future<dynamic> post(String url, body) async {
       },
     );
     if (response.statusCode == 201) {
-      // print(json.decode(response.body));
       return (json.decode(response.body));
       // return true;
     } else {
-      throw Exception(response.statusCode);
+      return false;
     }
   } catch (e) {
     throw Exception(e);

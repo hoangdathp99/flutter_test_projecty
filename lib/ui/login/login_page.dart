@@ -90,7 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       MaterialPageRoute(builder: (_) => const SignUpScreen()));
                 },
                 child: const Text('Sign up'),
-              )
+              ),
+              Container()
             ],
           ),
         ))));
@@ -103,12 +104,20 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     var res = await post('https://api.escuelajs.co/api/v1/auth/login',
         jsonEncode(loginReq.toJson()));
-    _loginRes = LoginRes.fromJson(res);
-    print(_loginRes.accessToken);
-    if (_loginRes.accessToken != '') {
-      await saveData(_loginRes.accessToken);
-      provider.logIn();
-      Navigator.pushReplacementNamed(context, RoutePaths.home);
+    if (res != false) {
+      _loginRes = LoginRes.fromJson(res);
+      print(_loginRes.accessToken);
+      if (_loginRes.accessToken != '') {
+        if (await saveData("token", _loginRes.accessToken) == true &&
+            await saveData("refreshToken", _loginRes.refreshToken) == true) {
+          provider.logIn();
+          Navigator.pushReplacementNamed(context, RoutePaths.home);
+        }
+        ;
+      }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Wrong Info')));
     }
   }
 }
