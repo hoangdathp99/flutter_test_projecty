@@ -78,14 +78,16 @@ class AppStateModel with foundation.ChangeNotifier {
     notifyListeners();
   }
 
-  void getSearchData(context, param) async {
+  Future<List<ProductType>> getSearchData(context, param) async {
     loadingSearch = true;
     notifyListeners();
     Iterable item =
         await fetchData("api.escuelajs.co","/api/v1/products/", param);
-    _ProductSearch = item.map((e) => ProductType.fromJson(e)).toList();
+    List<ProductType> tempProduct = item.map((e) => ProductType.fromJson(e)).toList();
+    _ProductSearch = tempProduct;
     loadingSearch = false;
     notifyListeners();
+    return tempProduct;
   }
 
   void resetSearchData() {

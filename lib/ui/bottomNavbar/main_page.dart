@@ -111,9 +111,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const ThirdNavigator()),
       ];
   final List<BottomNavItem> _listBottomNavItems = const [
-    BottomNavItem(title: "homeLabel", icon: Icons.home),
-    BottomNavItem(title: "activityLabel", icon: Icons.receipt),
-    BottomNavItem(title: "walletLabel", icon: Icons.credit_card),
+    BottomNavItem(title: "home", icon: Icons.home),
+    BottomNavItem(title: "activity", icon: Icons.receipt),
+    BottomNavItem(title: "wallet", icon: Icons.credit_card),
   ];
 
   @override
