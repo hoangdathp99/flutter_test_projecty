@@ -8,13 +8,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter_application_1/services/dio_helper.dart';
 
 class ErrorResPonse {
-  final int statusCode;
-  final String message;
-  final String error;
+  final int? statusCode;
+  final String? message;
+  final String? error;
   ErrorResPonse({
-    required this.statusCode,
-    required this.message,
-    required this.error,
+    this.statusCode,
+    this.message,
+    this.error,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,9 +27,9 @@ class ErrorResPonse {
 
   factory ErrorResPonse.fromMap(Map<String, dynamic> map) {
     return ErrorResPonse(
-      statusCode: map['statusCode'] as int,
-      message: map['message'] as String,
-      error: map['error'] as String,
+      statusCode: map['statusCode'],
+      message: map['message'],
+      error: map['error'],
     );
   }
 
@@ -44,12 +44,13 @@ Future<dynamic> GET(String url, Map<String, String> param) async {
     Response response = await configDio().get(url, queryParameters: param);
     return response;
   } on DioError catch (e) {
-    print(e);
+    // print(e.response!.statusCode);
     if (e.response != null) {
       print(e.response!.data);
       return ErrorResPonse.fromJson(e.response!.data);
-    } else
+    } else {
       return e.response;
+    }
   }
 }
 

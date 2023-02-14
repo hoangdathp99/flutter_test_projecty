@@ -155,6 +155,11 @@ class Body {
       this.email = '',
       this.avatar = '',
       this.role = ''});
-  Map<String, dynamic> toJson() =>
-      {'name': name, 'email': email, 'password': password, 'avatar': avatar};
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'email': email,
+        'password': password,
+        'avatar': avatar,
+        'role': role
+      };
 }

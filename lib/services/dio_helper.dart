@@ -7,7 +7,7 @@ import 'package:flutter_application_1/ui/login/login_page.dart';
 import 'package:flutter_application_1/utils/utils.dart';
 
 var dio = Dio();
-configDio() {
+Dio configDio() {
   dio.interceptors
       .add(QueuedInterceptorsWrapper(onRequest: (options, handler) async {
     options.connectTimeout = 3000;
@@ -54,7 +54,9 @@ configDio() {
               data: error.requestOptions.data,
               queryParameters: error.requestOptions.queryParameters);
           return handler.resolve(cloneReq);
-        } else if (res.statusCode == 401 || res.statusCode == 403) {
+        } else if (res.statusCode == 401 ||
+            res.statusCode == 403 ||
+            res.statusCode == 400) {
           navigatorKey.currentState
               ?.pushNamedAndRemoveUntil(RoutePaths.login, (route) => false);
         }

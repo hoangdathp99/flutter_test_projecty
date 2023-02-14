@@ -182,9 +182,9 @@ class _PageThirdState extends State<PageThird> {
                               color: Colors.black26,
                             ),
                           ),
-                          const Text(
-                            'Flutter Developer',
-                            style: TextStyle(
+                          Text(
+                            user.role,
+                            style: const TextStyle(
                               color: Colors.black38,
                               fontSize: 25,
                             ),
@@ -198,7 +198,7 @@ class _PageThirdState extends State<PageThird> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
-                  width: double.infinity,
+                  // width: double.infinity,
                   child: TextButton(
                     onPressed: () async {
                       // String refreshToken = await loadData("refreshToken");
@@ -236,7 +236,7 @@ class _PageThirdState extends State<PageThird> {
     // Response? res;
 
     if (token != '') {
-      Response res =
+      var res =
           await GET("https://api.escuelajs.co/api/v1/auth/profile?", {"": ""});
       if (res != null) {
         if (res.statusCode == 200) {
@@ -245,7 +245,7 @@ class _PageThirdState extends State<PageThird> {
             // print(user.name);
           });
         }
-        print(res.statusCode);
+        print(res);
       }
     }
   }

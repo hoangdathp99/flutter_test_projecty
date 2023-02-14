@@ -37,6 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Sign-in Screen"),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
         ),
         body: Form(
             child: Scrollbar(
@@ -44,6 +46,12 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(20, 30, 20, 70),
+                child: const FlutterLogo(
+                  size: 40,
+                ),
+              ),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -53,10 +61,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 autofocus: true,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   filled: true,
                   hintText: 'Your email',
                   labelText: 'Email',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(90.0),
+                  ),
                 ),
                 onChanged: (value) => {email = value},
               ),
@@ -70,19 +81,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
                   return null;
                 },
-                decoration:
-                    const InputDecoration(filled: true, labelText: 'Password'),
+                decoration: InputDecoration(
+                  filled: true,
+                  labelText: 'Password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(90.0),
+                  ),
+                ),
                 obscureText: true,
                 onChanged: (value) => {password = value},
               ),
               const SizedBox(
                 height: 24,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Login(email, password, context);
-                },
-                child: const Text('Sign in'),
+              Container(
+                height: 80,
+                padding: const EdgeInsets.all(20),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50),
+                  ),
+                  onPressed: () {
+                    Login(email, password, context);
+                  },
+                  child: const Text('Sign in'),
+                ),
               ),
               TextButton(
                 onPressed: () {

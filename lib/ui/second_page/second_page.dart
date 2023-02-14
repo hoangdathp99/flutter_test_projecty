@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
+import 'package:modal_side_sheet/modal_side_sheet.dart';
 import 'package:provider/provider.dart';
 
 class SecondScreen extends StatefulWidget {
@@ -11,6 +12,8 @@ class SecondScreen extends StatefulWidget {
 }
 
 class _SecondScreenState extends State<SecondScreen> {
+  int data1 = 0;
+
   @override
   initState() {
     super.initState();
@@ -22,6 +25,7 @@ class _SecondScreenState extends State<SecondScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(data1);
     return Scaffold(
         appBar: AppBar(
           title: const Text("Second Page"),
@@ -30,14 +34,31 @@ class _SecondScreenState extends State<SecondScreen> {
           builder: (context, value, child) {
             // print(value.productName);
             // return SingleChildScrollView(
-            return !value.loading
-                // ? ProductList(listProduct: value.availableProducts)
-                ? Center(
-                    child: Text(value.Product[0].title != null ? value.Product[0].title.toString() : ""),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  );
+            return ElevatedButton(
+                onPressed: () {
+                  showModalSideSheet(
+                      context: context,
+                      ignoreAppBar: true,
+                      withCloseControll: false,
+                      body: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              final data = Navigator.pop(context, index);
+                              setState(() {
+                                data1 = index;
+                              });
+                            },
+                            child: ListTile(
+                              leading: Icon(Icons.face),
+                              title: Text("I am on $index index"),
+                              trailing: Icon(Icons.safety_divider),
+                            ),
+                          );
+                        },
+                      ));
+                },
+                child: Text("Show Modal Side Sheet"));
           },
         ));
   }

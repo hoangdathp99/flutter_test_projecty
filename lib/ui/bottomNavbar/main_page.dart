@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<BottomNavItem> _listBottomNavItems = const [
     BottomNavItem(title: "home", icon: Icons.home),
     BottomNavItem(title: "activity", icon: Icons.receipt),
-    BottomNavItem(title: "wallet", icon: Icons.credit_card),
+    BottomNavItem(title: "profile", icon: Icons.person),
   ];
 
   @override
