@@ -17,6 +17,8 @@ import 'package:flutter_application_1/ui/login/login_page.dart';
 import 'package:flutter_application_1/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
+import '../../model/avatar.dart';
+
 class PageThird extends StatefulWidget {
   const PageThird({super.key});
   // This widget is the home page of your application. It is stateful, meaning
@@ -34,9 +36,9 @@ class PageThird extends StatefulWidget {
 
 class _PageThirdState extends State<PageThird> {
   bool removeSuccess = false;
+  bool avaLoading = false;
   final ImagePicker _picker = ImagePicker();
-  ImageResponse _imageFile =
-      ImageResponse(filename: "", location: "", originalname: "");
+  Avatar _imageFile = Avatar(filename: "", location: "", originalname: "");
   User user =
       User(id: 1, email: "", password: "", name: "", avatar: "", role: "");
   @override
@@ -53,7 +55,6 @@ class _PageThirdState extends State<PageThird> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppStateModel>(context, listen: true);
-    print(_imageFile);
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50.0),
@@ -157,12 +158,12 @@ class _PageThirdState extends State<PageThird> {
                                 child: CircleAvatar(
                                   backgroundColor: Colors.white30,
                                   minRadius: 60.0,
-                                  child: GestureDetector(
+                                  child: avaLoading ? const CircularProgressIndicator() : GestureDetector(
                                     onTap: () {
                                       showModalBottomSheet(
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return Container(
+                                            return SizedBox(
                                               height: 200,
                                               child: Center(
                                                 child: Column(
@@ -180,6 +181,8 @@ class _PageThirdState extends State<PageThird> {
                                                                 .gallery,
                                                           );
                                                           updateAvatar(image!);
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.of(context).pop();
                                                         },
                                                         child: const Text(
                                                           "Choose image in gallery",
@@ -193,6 +196,8 @@ class _PageThirdState extends State<PageThird> {
                                                                 .camera,
                                                           );
                                                           updateAvatar(image!);
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.of(context).pop();
                                                         },
                                                         child: const Text(
                                                           "Choose image in camera",
@@ -313,6 +318,9 @@ class _PageThirdState extends State<PageThird> {
   }
 
   Future<void> updateAvatar(XFile param) async {
+    setState(() {
+      avaLoading = true;
+    });
     try {
       final dio = Dio();
 
@@ -332,37 +340,11 @@ class _PageThirdState extends State<PageThird> {
         data: formData,
       );
       setState(() {
-        _imageFile = ImageResponse.fromJson(response.data);
+        _imageFile = Avatar.fromJson(response.data);
+        avaLoading = false;
       });
     } catch (err) {
       print('uploading error: $err');
     }
   }
-}
-
-class ImageResponse {
-  final String location;
-  final String originalname;
-  final String filename;
-  ImageResponse(
-      {this.filename = "", this.location = "", this.originalname = ""});
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'filename': filename,
-      'location': location,
-      'originalname': originalname
-    };
-  }
-
-  factory ImageResponse.fromMap(Map<String, dynamic> map) {
-    return ImageResponse(
-      filename: map['filename'] as String,
-      location: map['location'] as String,
-      originalname: map['originalname'] as String,
-    );
-  }
-  String toJson() => json.encode(toMap());
-
-  factory ImageResponse.fromJson(Map<String, dynamic> source) =>
-      ImageResponse.fromMap(source);
 }
