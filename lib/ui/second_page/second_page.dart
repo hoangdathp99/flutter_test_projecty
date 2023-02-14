@@ -38,8 +38,8 @@ class _SecondScreenState extends State<SecondScreen> {
                 onPressed: () {
                   showModalSideSheet(
                       context: context,
-                      ignoreAppBar: true,
-                      withCloseControll: false,
+                      ignoreAppBar: false,
+                      withCloseControll: true,
                       body: ListView.builder(
                         itemBuilder: (context, index) {
                           return GestureDetector(

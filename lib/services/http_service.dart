@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 Future<dynamic> fetchData(
     String url, String unencodedPath, Map<String, String> param) async {
