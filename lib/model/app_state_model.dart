@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter_application_1/model/category.dart';
+import 'package:flutter_application_1/model/filter.dart';
 import 'package:flutter_application_1/model/product.dart';
 import 'package:flutter_application_1/services/http_service.dart';
 
@@ -30,20 +33,13 @@ class AppStateModel with foundation.ChangeNotifier {
         title: "")
   ];
   // ignore: non_constant_identifier_names
-  List<ProductType> _ProductSearch = [
-    ProductType(
-        id: 0,
-        category: Category(id: 0, image: "", name: ""),
-        description: "",
-        images: [],
-        price: 0,
-        title: "")
-  ];
+  List<ProductType> _ProductSearch = [];
   bool loading = true;
   // ignore: avoid_init_to_null
   bool? loadingSearch = null;
   // ignore: avoid_init_to_null
   bool? loggedIn = null;
+  Filter? _filter = Filter();
   // Loads the list of available products from the repo.
   @override
   void dispose() {
@@ -59,6 +55,14 @@ class AppStateModel with foundation.ChangeNotifier {
     super.dispose();
   }
 
+  void setFilter(Filter filter) {
+    _filter = Filter(minPrice: filter.minPrice, maxPrice: filter.maxPrice);
+  }
+
+  void resetFilter() {
+    _filter = null;
+  }
+
   void logOut() {
     loggedIn = false;
     notifyListeners();
@@ -71,8 +75,8 @@ class AppStateModel with foundation.ChangeNotifier {
 
   void getTinWinData(context) async {
     loading = true;
-    Iterable item = 
-        await fetchData("api.escuelajs.co","/api/v1/products",{"":""});
+    Iterable item =
+        await fetchData("api.escuelajs.co", "/api/v1/products", {"": ""});
     _ProductType = item.map((e) => ProductType.fromJson(e)).toList();
     loading = false;
     notifyListeners();
@@ -82,8 +86,9 @@ class AppStateModel with foundation.ChangeNotifier {
     loadingSearch = true;
     notifyListeners();
     Iterable item =
-        await fetchData("api.escuelajs.co","/api/v1/products/", param);
-    List<ProductType> tempProduct = item.map((e) => ProductType.fromJson(e)).toList();
+        await fetchData("api.escuelajs.co", "/api/v1/products/", param);
+    List<ProductType> tempProduct =
+        item.map((e) => ProductType.fromJson(e)).toList();
     _ProductSearch = tempProduct;
     loadingSearch = false;
     notifyListeners();
@@ -103,8 +108,7 @@ class AppStateModel with foundation.ChangeNotifier {
     loadingSearch = null;
   }
 
-  // ignore: non_constant_identifier_names
   List<ProductType> get Product => _ProductType;
-  // ignore: non_constant_identifier_names
   List<ProductType> get ProductSearch => _ProductSearch;
+  Filter? get Filters => _filter;
 }
