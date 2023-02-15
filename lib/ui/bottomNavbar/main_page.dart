@@ -38,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   // ignore: prefer_typing_uninitialized_variables
   var position = 0.0;
+  // ignore: prefer_typing_uninitialized_variables
   var provider;
   Offset offset = Offset.zero;
   void _onHorizontalDragStart(DragStartDetails details) {

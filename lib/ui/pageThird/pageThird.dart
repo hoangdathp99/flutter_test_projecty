@@ -1,16 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/model/user.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/services/dio_helper.dart';
+import 'package:flutter_application_1/services/http_service.dart';
 import 'package:flutter_application_1/services/token_http_services.dart';
 import 'package:flutter_application_1/ui/login/login_page.dart';
 import 'package:flutter_application_1/utils/utils.dart';
-import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+
+import '../../model/avatar.dart';
 
 class PageThird extends StatefulWidget {
   const PageThird({super.key});
@@ -29,6 +36,9 @@ class PageThird extends StatefulWidget {
 
 class _PageThirdState extends State<PageThird> {
   bool removeSuccess = false;
+  bool avaLoading = false;
+  final ImagePicker _picker = ImagePicker();
+  Avatar _imageFile = Avatar(filename: "", location: "", originalname: "");
   User user =
       User(id: 1, email: "", password: "", name: "", avatar: "", role: "");
   @override
@@ -37,6 +47,10 @@ class _PageThirdState extends State<PageThird> {
     super.initState();
     getProfile();
   }
+
+  // void _setImageFileListFromFile(XFile? value) {
+  //   _imageFileList = value == null ? null : <XFile>[value];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +114,7 @@ class _PageThirdState extends State<PageThird> {
               Row(
                 children: [
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: 250,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,10 +136,10 @@ class _PageThirdState extends State<PageThird> {
                                   ],
                                   // color: Colors.amber),
                                 ),
-                                child: CircleAvatar(
+                                child: const CircleAvatar(
                                   backgroundColor: Color(0xfff4f4f4),
                                   minRadius: 35.0,
-                                  child: const Icon(Icons.call, size: 30.0),
+                                  child: Icon(Icons.call, size: 30.0),
                                 ),
                               ),
                               Container(
@@ -144,10 +158,63 @@ class _PageThirdState extends State<PageThird> {
                                 child: CircleAvatar(
                                   backgroundColor: Colors.white30,
                                   minRadius: 60.0,
-                                  child: CircleAvatar(
-                                      radius: 50.0,
-                                      backgroundImage:
-                                          NetworkImage(user.avatar)),
+                                  child: avaLoading ? const CircularProgressIndicator() : GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return SizedBox(
+                                              height: 200,
+                                              child: Center(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    ElevatedButton(
+                                                        onPressed: () async {
+                                                          final image =
+                                                              await _picker
+                                                                  .pickImage(
+                                                            source: ImageSource
+                                                                .gallery,
+                                                          );
+                                                          updateAvatar(image!);
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: const Text(
+                                                          "Choose image in gallery",
+                                                        )),
+                                                    ElevatedButton(
+                                                        onPressed: () async {
+                                                          final image =
+                                                              await _picker
+                                                                  .pickImage(
+                                                            source: ImageSource
+                                                                .camera,
+                                                          );
+                                                          updateAvatar(image!);
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: const Text(
+                                                          "Choose image in camera",
+                                                        ))
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    },
+                                    child: CircleAvatar(
+                                        radius: 50.0,
+                                        backgroundImage: NetworkImage(
+                                            _imageFile.location != ""
+                                                ? _imageFile.location
+                                                : user.avatar)),
+                                  ),
                                 ),
                               ),
                               Container(
@@ -247,6 +314,37 @@ class _PageThirdState extends State<PageThird> {
         }
         print(res);
       }
+    }
+  }
+
+  Future<void> updateAvatar(XFile param) async {
+    setState(() {
+      avaLoading = true;
+    });
+    try {
+      final dio = Dio();
+
+      dio.options.headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      };
+
+      final file =
+          await MultipartFile.fromFile(param.path, filename: param.name);
+
+      final formData = FormData.fromMap(
+          {'file': file}); // 'file' - this is an api key, can be different
+
+      final response = await dio.post(
+        // or dio.post
+        "https://api.escuelajs.co/api/v1/files/upload",
+        data: formData,
+      );
+      setState(() {
+        _imageFile = Avatar.fromJson(response.data);
+        avaLoading = false;
+      });
+    } catch (err) {
+      print('uploading error: $err');
     }
   }
 }
