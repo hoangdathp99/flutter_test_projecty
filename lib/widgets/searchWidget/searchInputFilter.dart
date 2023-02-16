@@ -5,9 +5,10 @@ import 'package:flutter_application_1/services/http_service.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class SearchInput extends StatefulWidget {
-  const SearchInput({super.key, required this.onSearch, required this.handleSearchText});
+  const SearchInput({super.key, required this.onSearch, required this.handleSearchText,this.searchText = ""});
   final Function handleSearchText;
   final Function onSearch; 
+  final String searchText;
   @override
   State<SearchInput> createState() => _SearchInputState();
 }
@@ -26,6 +27,7 @@ class _SearchInputState extends State<SearchInput> {
             controller: _controller,
             focusNode: searchNode,
             textAlignVertical: TextAlignVertical.center,
+            
             onChanged: (value) {
               widget.handleSearchText(value);
             },
@@ -46,7 +48,7 @@ class _SearchInputState extends State<SearchInput> {
                   borderSide:
                       const BorderSide(width: 1, color: Colors.transparent),
                 ),
-                hintText: 'Search',
+                hintText: widget.searchText != '' ? widget.searchText : 'Search',
                 hintStyle: const TextStyle(
                     color: Colors.black54, fontWeight: FontWeight.w500),
                 fillColor: const Color(0xFFf4f4f4),

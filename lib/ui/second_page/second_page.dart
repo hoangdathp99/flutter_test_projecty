@@ -119,6 +119,7 @@ class _SecondScreenState extends State<SecondScreen> {
                                               child: SearchInput(
                                                 onSearch: (){},
                                                 handleSearchText: handleSearchText,
+                                                searchText:searchText,
                                               ),
                                             ),
                                             SizedBox(height: 24),
