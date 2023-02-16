@@ -57,10 +57,12 @@ class AppStateModel with foundation.ChangeNotifier {
 
   void setFilter(Filter filter) {
     _filter = Filter(minPrice: filter.minPrice, maxPrice: filter.maxPrice);
+    notifyListeners();
   }
 
   void resetFilter() {
     _filter = null;
+    notifyListeners();
   }
 
   void logOut() {
@@ -83,16 +85,16 @@ class AppStateModel with foundation.ChangeNotifier {
   }
 
   Future<List<ProductType>> getSearchData(context, param) async {
-    loadingSearch = true;
-    notifyListeners();
-    Iterable item =
-        await fetchData("api.escuelajs.co", "/api/v1/products/", param);
-    List<ProductType> tempProduct =
-        item.map((e) => ProductType.fromJson(e)).toList();
-    _ProductSearch = tempProduct;
-    loadingSearch = false;
-    notifyListeners();
-    return tempProduct;
+      loadingSearch = true;
+      notifyListeners();
+      Iterable item =
+          await fetchData("api.escuelajs.co", "/api/v1/products/", param);
+      List<ProductType> tempProduct =
+          item.map((e) => ProductType.fromJson(e)).toList();
+      _ProductSearch = tempProduct;
+      loadingSearch = false;
+      notifyListeners();
+      return tempProduct;
   }
 
   void resetSearchData() {

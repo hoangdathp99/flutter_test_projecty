@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
 import 'package:flutter_application_1/widgets/productCard/product_list.dart';
-import 'package:flutter_application_1/widgets/searchWidget/searchInput.dart';
+import 'package:flutter_application_1/widgets/searchWidget/searchTrigger.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/utils/utils.dart';
 
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.pushNamed(context, RoutePaths.search,
                   arguments: searchResult);
             },
-            child: SearchInput(),
+            child: SearchTrigger(),
           ),
         ]),
       ),

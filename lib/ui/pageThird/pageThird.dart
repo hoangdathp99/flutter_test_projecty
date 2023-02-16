@@ -180,7 +180,9 @@ class _PageThirdState extends State<PageThird> {
                                                             source: ImageSource
                                                                 .gallery,
                                                           );
-                                                          updateAvatar(image!);
+                                                          if(image != null) {
+                                                            updateAvatar(image);
+                                                          }
                                                           // ignore: use_build_context_synchronously
                                                           Navigator.of(context).pop();
                                                         },
@@ -195,7 +197,9 @@ class _PageThirdState extends State<PageThird> {
                                                             source: ImageSource
                                                                 .camera,
                                                           );
-                                                          updateAvatar(image!);
+                                                          if(image != null) {
+                                                            updateAvatar(image);
+                                                          }
                                                           // ignore: use_build_context_synchronously
                                                           Navigator.of(context).pop();
                                                         },
