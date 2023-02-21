@@ -27,21 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(90.0),
         ),
       );
-  InputDecoration decoration1 = InputDecoration(
-    hintText: 'Enter your name',
-    hintStyle: TextStyle(
-      color: Colors.grey[500],
-      fontStyle: FontStyle.italic,
-    ),
-  );
-
-  InputDecoration decoration2 = InputDecoration(
-    labelText: 'Name',
-    labelStyle: TextStyle(
-      color: Colors.blue,
-      fontWeight: FontWeight.bold,
-    ),
-  );
   var provider;
   LoginRes _loginRes = LoginRes(accessToken: '', refreshToken: '');
   final _formKey = GlobalKey<FormState>();

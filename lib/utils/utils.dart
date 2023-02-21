@@ -18,8 +18,15 @@ Future<bool> removeData(String key) async {
 }
 
 String capitalize(String str) {
-  return str
-      .split(' ')
-      .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
-      .join(' ');
+  if (str != '') {
+    return str.split(' ').map((word) {
+      if (word.isNotEmpty) {
+        return word[0].toUpperCase() + word.substring(1);
+      } else {
+        return word;
+      }
+    }).join(' ');
+  } else {
+    return str;
+  }
 }

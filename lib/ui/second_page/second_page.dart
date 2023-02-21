@@ -22,6 +22,8 @@ class _SecondScreenState extends State<SecondScreen> {
   bool isSubmit = true;
   int? minPrice = null;
   int? maxPrice = null;
+  FocusNode minFocus =  FocusNode();
+  FocusNode maxFocus =  FocusNode();
   var provider;
   final _formKey = GlobalKey<FormState>();
   Filter filter = Filter();
@@ -30,8 +32,6 @@ class _SecondScreenState extends State<SecondScreen> {
       searchText = value;
     });
   }
-
-  
 
   @override
   initState() {
@@ -65,7 +65,8 @@ class _SecondScreenState extends State<SecondScreen> {
                       children: [
                         Container(
                           padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50)),
                           child: ElevatedButton(
                               onPressed: () {
                                 if (provider.Filters != null) {
@@ -82,10 +83,12 @@ class _SecondScreenState extends State<SecondScreen> {
                                     context: context,
                                     // ignoreAppBar: false,
                                     withCloseControll: false,
-                                    width: MediaQuery.of(context).size.width * 0.8,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
                                     body: ListView.builder(
                                       itemCount: 1,
-                                      itemBuilder: (context, index) => Container(
+                                      itemBuilder: (context, index) =>
+                                          Container(
                                         decoration: BoxDecoration(),
                                         padding: EdgeInsets.only(
                                             top: 20,
@@ -115,11 +118,13 @@ class _SecondScreenState extends State<SecondScreen> {
                                                   ],
                                                   borderRadius:
                                                       BorderRadius.circular(50),
-                                                  color: const Color(0xFFf4f4f4)),
+                                                  color:
+                                                      const Color(0xFFf4f4f4)),
                                               child: SearchInput(
-                                                onSearch: (){},
-                                                handleSearchText: handleSearchText,
-                                                searchText:searchText,
+                                                onSearch: () {},
+                                                handleSearchText:
+                                                    handleSearchText,
+                                                searchText: searchText,
                                               ),
                                             ),
                                             SizedBox(height: 24),
@@ -136,29 +141,55 @@ class _SecondScreenState extends State<SecondScreen> {
                                                     child: TextFormField(
                                                       validator: (value) {
                                                         if (value == "" &&
-                                                            (maxPrice != null)) {
+                                                            (maxPrice !=
+                                                                null)) {
                                                           return "Please enter min price";
                                                         }
                                                       },
                                                       initialValue:
                                                           minPrice?.toString(),
-                                                      decoration: InputDecoration(
+                                                      focusNode: minFocus,
+                                                      decoration:
+                                                          InputDecoration(
                                                         helperText: " ",
                                                         filled: true,
                                                         label: Text("vnd"),
+                                                        labelStyle: TextStyle(color: minFocus.hasFocus ? Colors.black54 : Colors.black54),
                                                         hintText: "Min price",
                                                         floatingLabelBehavior:
                                                             FloatingLabelBehavior
                                                                 .always,
-                                                        floatingLabelStyle:
-                                                            TextStyle(
-                                                                decoration:
-                                                                    TextDecoration
-                                                                        .underline),
-                                                        border:
-                                                            OutlineInputBorder(),
+                                                        floatingLabelStyle: TextStyle(
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .underline),
+                                                        focusColor: const Color(
+                                                            0xFFf4f4f4),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(50),
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .transparent),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(50),
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .transparent),
+                                                        ),
                                                       ),
-                                                      textAlign: TextAlign.center,
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       keyboardType:
                                                           TextInputType.number,
                                                       onChanged: (value) {
@@ -191,23 +222,47 @@ class _SecondScreenState extends State<SecondScreen> {
                                                       },
                                                       initialValue:
                                                           maxPrice?.toString(),
-                                                      decoration: InputDecoration(
+                                                      decoration:
+                                                          InputDecoration(
                                                         helperText: " ",
                                                         filled: true,
                                                         label: Text("vnd"),
+                                                        labelStyle: TextStyle(color: Colors.black54),
                                                         hintText: "Max price",
                                                         floatingLabelBehavior:
                                                             FloatingLabelBehavior
                                                                 .always,
-                                                        floatingLabelStyle:
-                                                            TextStyle(
-                                                                decoration:
-                                                                    TextDecoration
-                                                                        .underline),
-                                                        border:
-                                                            OutlineInputBorder(),
+                                                        floatingLabelStyle: TextStyle(
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .underline),
+                                                        focusColor: const Color(
+                                                            0xFFf4f4f4),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(50),
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .transparent),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(50),
+                                                          borderSide:
+                                                              const BorderSide(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .transparent),
+                                                        ),
                                                       ),
-                                                      textAlign: TextAlign.center,
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       keyboardType:
                                                           TextInputType.number,
                                                       onChanged: (value) {
@@ -225,7 +280,8 @@ class _SecondScreenState extends State<SecondScreen> {
                                             SizedBox(height: 24),
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Expanded(
                                                   flex: 1,
@@ -248,22 +304,30 @@ class _SecondScreenState extends State<SecondScreen> {
                                                   flex: 1,
                                                   child: ElevatedButton(
                                                       onPressed: () {
-                                                        if (_formKey.currentState!
+                                                        if (_formKey
+                                                            .currentState!
                                                             .validate()) {
                                                           Filter filter = Filter(
-                                                              minPrice: minPrice,
-                                                              maxPrice: maxPrice,searchText: searchText);
+                                                              minPrice:
+                                                                  minPrice,
+                                                              maxPrice:
+                                                                  maxPrice,
+                                                              searchText:
+                                                                  searchText);
                                                           Provider.of<AppStateModel>(
                                                                   context,
                                                                   listen: false)
-                                                              .setFilter(filter);
+                                                              .setFilter(
+                                                                  filter);
                                                           Provider.of<AppStateModel>(
                                                                   context,
                                                                   listen: false)
                                                               .getSearchData(
                                                                   context,
-                                                                  filter.toJson());
-                                                          Navigator.pop(context);
+                                                                  filter
+                                                                      .toJson());
+                                                          Navigator.pop(
+                                                              context);
                                                         }
                                                       },
                                                       child: Text("apply")),
