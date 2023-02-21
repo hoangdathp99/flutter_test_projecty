@@ -66,32 +66,37 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontWeight: FontWeight.w700,
                 fontSize: 25),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    settings: RouteSettings(arguments: searchResult),
-                    transitionDuration: const Duration(milliseconds: 300),
-                    pageBuilder: (_, __, ___) => SearchScreen(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, page) {
-                      var begin = 0.0;
-                      var end = 1.0;
-                      var curve = Curves.fastLinearToSlowEaseIn;
+          Hero(
+            tag: "search",
+            child: GestureDetector(
+              onTap: () {
+                // Navigator.push(
+                //     context,
+                //     PageRouteBuilder(
+                //       settings: RouteSettings(arguments: searchResult),
+                //       transitionDuration: const Duration(milliseconds: 300),
+                //       pageBuilder: (_, __, ___) => SearchScreen(),
+                //       transitionsBuilder:
+                //           (context, animation, secondaryAnimation, page) {
+                //         var begin = 0.0;
+                //         var end = 1.0;
+                //         var curve = Curves.fastLinearToSlowEaseIn;
 
-                      var tween = Tween(begin: begin, end: end)
-                          .chain(CurveTween(curve: curve));
-                      return ScaleTransition(
-                        alignment: Alignment(1, -1),
-                        scale: animation.drive(tween),
-                        child: page,
-                        filterQuality: FilterQuality.none,
-                      );
-                    },
-                  ));
-            },
-            child: SearchTrigger(),
+                //         var tween = Tween(begin: begin, end: end)
+                //             .chain(CurveTween(curve: curve));
+                //         return ScaleTransition(
+                //           alignment: Alignment(1, -1),
+                //           scale: animation.drive(tween),
+                //           child: page,
+                //           filterQuality: FilterQuality.none,
+                //         );
+                //       },
+                //     ));
+                Navigator.pushNamed(context, RoutePaths.search,
+                    arguments: searchResult);
+              },
+              child: SearchTrigger(),
+            ),
           ),
         ]),
       ),

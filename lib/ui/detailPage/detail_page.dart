@@ -43,33 +43,33 @@ class _DetailPageState extends State<DetailPage> {
               return Container(
                 padding: const EdgeInsets.all(10),
                 child: Column(children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(args.images[0]),
-                            fit: BoxFit.cover)),
-                    height: 300,
-                    width: double.infinity,
+                  Hero(
+                    tag: args.title,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(args.images[0]),
+                              fit: BoxFit.cover)),
+                      height: 300,
+                      width: double.infinity,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      args.title != ""
-                          ? Text(args.title,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20))
-                          : Container(),
+                      Text(args.title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
                       // ignore: unrelated_type_equality_checks
-                      args.price != ""
-                          ? Text(
-                              '\$${args.price.toString()}',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 20),
-                            )
-                          : Container()
+
+                      Text(
+                        '\$${args.price.toString()}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 20),
+                      )
                     ],
                   ),
                   const SizedBox(
