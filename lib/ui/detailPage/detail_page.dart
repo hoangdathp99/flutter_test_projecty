@@ -58,7 +58,7 @@ class _DetailPageState extends State<DetailPage> {
                     height: 20,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(args.title,
                           style: const TextStyle(
