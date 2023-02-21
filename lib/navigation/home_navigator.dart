@@ -10,11 +10,9 @@ class HomeNavigator extends StatefulWidget {
 }
 
 class _HomeNavigatorState extends State<HomeNavigator> {
-  late HeroController _heroController;
   @override
   void initState() {
     super.initState();
-    _heroController = HeroController(createRectTween: _createRectTween);
   }
 
   @override
@@ -52,9 +50,5 @@ class _HomeNavigatorState extends State<HomeNavigator> {
         },
       ),
     );
-  }
-
-  RectTween _createRectTween(Rect? begin, Rect? end) {
-    return MaterialRectArcTween(begin: begin, end: end);
   }
 }
