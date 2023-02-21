@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/product.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
@@ -43,7 +45,9 @@ class ProductList extends StatelessWidget {
               // arguments: listProduct[index],);
               // value.loadProducts();
             },
-            child: ProductCard(product: listProduct[index])),
+            child:
+              ProductCard(product: listProduct[index])
+            ),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 2 / 3,

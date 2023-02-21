@@ -29,19 +29,19 @@ class ProductCard extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Container(
+        product.images.isNotEmpty ? Container(
           decoration: BoxDecoration(
             image: DecorationImage(
                 image: NetworkImage(product.images[0]), fit: BoxFit.contain),
           ),
           height: 160,
-        ),
+        ) : Container(height: 160),
         // const SizedBox(height: 10),
         Column(children: [
           SizedBox(
             height: 45,
             child: Text(
-              capitalize(product.title),
+              product.title != '' ? capitalize(product.title) : product.title,
               style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
