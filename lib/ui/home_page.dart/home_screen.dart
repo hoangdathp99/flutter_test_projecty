@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/navigation/routePaths.dart';
+import 'package:flutter_application_1/ui/searchPage/search_screen.dart';
 import 'package:flutter_application_1/widgets/productCard/product_list.dart';
 import 'package:flutter_application_1/widgets/searchWidget/searchTrigger.dart';
 import 'package:provider/provider.dart';
@@ -59,12 +60,36 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text(
             capitalize(widget.title),
-            style: const TextStyle(color: Colors.black, fontFamily: 'Poppins',fontWeight: FontWeight.w700,fontSize: 25),
+            style: const TextStyle(
+                color: Colors.black,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w700,
+                fontSize: 25),
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, RoutePaths.search,
-                  arguments: searchResult);
+              Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    settings: RouteSettings(arguments: searchResult),
+                    transitionDuration: const Duration(milliseconds: 300),
+                    pageBuilder: (_, __, ___) => SearchScreen(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, page) {
+                      var begin = 0.0;
+                      var end = 1.0;
+                      var curve = Curves.fastLinearToSlowEaseIn;
+
+                      var tween = Tween(begin: begin, end: end)
+                          .chain(CurveTween(curve: curve));
+                      return ScaleTransition(
+                        alignment: Alignment(1, -1),
+                        scale: animation.drive(tween),
+                        child: page,
+                        filterQuality: FilterQuality.none,
+                      );
+                    },
+                  ));
             },
             child: SearchTrigger(),
           ),

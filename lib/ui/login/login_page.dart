@@ -20,6 +20,28 @@ class _LoginScreenState extends State<LoginScreen> {
   String email = '';
   String password = '';
   String token = '';
+  InputDecoration inputDeco(text) => InputDecoration(
+        filled: true,
+        labelText: text,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(90.0),
+        ),
+      );
+  InputDecoration decoration1 = InputDecoration(
+    hintText: 'Enter your name',
+    hintStyle: TextStyle(
+      color: Colors.grey[500],
+      fontStyle: FontStyle.italic,
+    ),
+  );
+
+  InputDecoration decoration2 = InputDecoration(
+    labelText: 'Name',
+    labelStyle: TextStyle(
+      color: Colors.blue,
+      fontWeight: FontWeight.bold,
+    ),
+  );
   var provider;
   LoginRes _loginRes = LoginRes(accessToken: '', refreshToken: '');
   final _formKey = GlobalKey<FormState>();
@@ -61,14 +83,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 autofocus: true,
                 textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  filled: true,
-                  hintText: 'Your email',
-                  labelText: 'Email',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                ),
+                // decoration: InputDecoration(
+                //   filled: true,
+                //   hintText: 'Your email',
+                //   labelText: 'Email',
+                //   border: OutlineInputBorder(
+                //     borderRadius: BorderRadius.circular(90.0),
+                //   ),
+                // ),
+                decoration: inputDeco("Email").copyWith(hintText: "Your Email"),
                 onChanged: (value) => {email = value},
               ),
               const SizedBox(
@@ -81,13 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  filled: true,
-                  labelText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                ),
+                decoration: inputDeco('Password'),
                 obscureText: true,
                 onChanged: (value) => {password = value},
               ),

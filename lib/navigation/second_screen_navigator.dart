@@ -21,8 +21,7 @@ class _SecondNavigatorState extends State<SecondNavigator> {
                 case '/':
                   return const SecondScreen();
                 case 'detail':
-                  return const DetailPage(
-                  );
+                  return const DetailPage();
                 default:
                   return const SecondScreen();
               }

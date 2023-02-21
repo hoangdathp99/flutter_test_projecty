@@ -3,8 +3,10 @@ import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/model/product.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/utils/utils.dart';
+
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
+
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -75,7 +77,7 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                  // ignore: unrelated_type_equality_checks
+                    // ignore: unrelated_type_equality_checks
                     child: args.category.name != ""
                         ? Text(
                             capitalize(args.category.name.toString()),

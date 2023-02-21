@@ -23,8 +23,8 @@ class _HomeNavigatorState extends State<HomeNavigator> {
                 return const HomeScreen(title: 'home');
               case "search":
                 return const SearchScreen();
-              case 'detail':
-                return const DetailPage();
+              // case 'detail':
+              //   return const DetailPage();
               default:
                 return const HomeScreen(title: 'home');
             }
