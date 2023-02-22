@@ -16,6 +16,11 @@ if (flutterVersionCode == null) {
     flutterVersionCode = '1'
 }
 
+def appCenterVersionCode = System.getenv('APPCENTER_BUILD_ID')
+if (appCenterVersionCode != null) {
+    flutterVersionCode = appCenterVersionCode
+}
+
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
