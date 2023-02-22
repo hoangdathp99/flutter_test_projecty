@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # place this script in project/android/app/
-if [[ "$@" != *"-Ptarget"* ]]; then
-  echo "Not found target in arguments when call gradlew, force skip gradle."
-  exit 0
-fi
+# if [[ "$@" != *"-Ptarget"* ]]; then
+#   echo "Not found target in arguments when call gradlew, force skip gradle."
+#   exit 0
+# fi
 cd ..
 # fail if any command fails
 set -e
