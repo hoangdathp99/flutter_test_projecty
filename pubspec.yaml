@@ -47,6 +47,8 @@ dependencies:
   modal_side_sheet: ^0.0.1
   side_sheet: ^1.0.4
   image_picker: ^0.8.6+1
+  moment_dart: ^0.17.0
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:

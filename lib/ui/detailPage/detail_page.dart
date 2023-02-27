@@ -3,7 +3,7 @@ import 'package:flutter_application_1/model/app_state_model.dart';
 import 'package:flutter_application_1/model/product.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/utils/utils.dart';
-
+import 'package:flutter_application_1/widgets/datePicker/datePicker.dart';
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
 
@@ -60,15 +60,21 @@ class _DetailPageState extends State<DetailPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(args.title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20)),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Text(args.title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20)),
+                      ),
                       // ignore: unrelated_type_equality_checks
-
-                      Text(
-                        '\$${args.price.toString()}',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 20),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.2,
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          '\$${args.price.toString()}',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 20),
+                        ),
                       )
                     ],
                   ),
@@ -90,10 +96,11 @@ class _DetailPageState extends State<DetailPage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Text(args.description),
-                  )
+                  ),
+                  const DatePickerWidget(),
                 ]),
               );
             },
